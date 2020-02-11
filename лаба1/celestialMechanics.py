@@ -1,4 +1,4 @@
-from .Vector3 import Vector3
+from лаба1.Vector3 import Vector3
 
 
 class CelestialBody:

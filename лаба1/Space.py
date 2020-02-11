@@ -11,3 +11,11 @@ from .Vector3 import Vector3
 #
 # consts
 G = 6.67 * 10 ** -11
+
+
+class Space:
+    def __init__(self):
+        self.bodies = []
+
+    def step(self, dt):
+        return
