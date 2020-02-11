@@ -21,6 +21,7 @@ class CelestialBody:
 
     def step(self):
         self.position.add(self.velocity)
+        print(self.position)
 
     def apply_force(self, v):
         self.velocity.add(v)

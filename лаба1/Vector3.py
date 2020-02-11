@@ -2,7 +2,7 @@ import math
 
 
 class Vector3:
-    def __init__(self, x, y, z):
+    def __init__(self, x=0, y=0, z=0):
         self.x = x
         self.y = y
         self.z = z
@@ -18,6 +18,19 @@ class Vector3:
 
     def __mul__(self, n):
         return Vector3(self.x * n, self.y * n, self.z * n)
+
+    def copy(self, v):
+        self.x = v.x
+        self.y = v.y
+        self.z = v.z
+
+    def distance(self, v):
+        return math.sqrt((self.x - v.x) ** 2 + (self.y - v.y) ** 2 + (self.z - v.z) ** 2)
+
+    def to_position(self, v):
+        self.x = v.x - self.x
+        self.y = v.y - self.y
+        self.z = v.z - self.z
 
     def add(self, v):
         self.x += v.x
