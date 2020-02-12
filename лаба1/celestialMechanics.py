@@ -7,7 +7,7 @@ from лаба1.Vector3 import Vector3
 # a_1 = G * -----   - ускорение не зависит от собственной массы
 #            r^2
 # consts
-G = 100  # 6.67 * 10 ** -11
+G = 1000  # 6.67 * 10 ** -11
 
 
 class CelestialBody:
@@ -53,4 +53,4 @@ class Space:
         # потом передвигаем объекты на расстояние, пройденное за единицу времени
         for i in range(len(self.bodies)):
             body = self.bodies[i]
-            body.position += body.velocity
+            body.position += body.velocity * dt

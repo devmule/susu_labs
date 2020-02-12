@@ -17,7 +17,7 @@ space.bodies.append(CelestialBody(
 
 space.bodies.append(CelestialBody(
     position=Vector3(y=100),
-    velocity=Vector3(x=4),
+    velocity=Vector3(x=80),
     mass=100,
     radius=8,
     color="blue",
@@ -25,8 +25,8 @@ space.bodies.append(CelestialBody(
 
 space.bodies.append(CelestialBody(
     position=Vector3(y=-100),
-    velocity=Vector3(x=-8),
-    mass=50,
+    velocity=Vector3(x=-80),
+    mass=100,
     radius=5,
     color="green",
 ))
@@ -39,7 +39,7 @@ ui = UserInterface(
     h=600
 )
 
-dt = .05
+dt = .08
 while not ui.window.closed:
     ui.step()
     space.step(dt)
