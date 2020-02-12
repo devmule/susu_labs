@@ -40,8 +40,7 @@ ui = UserInterface(
 )
 
 dt = .05
-# todo выключать программу после закрытия окна
-while True:
+while not ui.window.closed:
     ui.step()
     space.step(dt)
     time.sleep(dt)
