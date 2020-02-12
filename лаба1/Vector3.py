@@ -19,41 +19,16 @@ class Vector3:
     def __mul__(self, n):
         return Vector3(self.x * n, self.y * n, self.z * n)
 
-    def copy(self, v):
-        self.x = v.x
-        self.y = v.y
-        self.z = v.z
-
-    def distance(self, v):
-        return math.sqrt((self.x - v.x) ** 2 + (self.y - v.y) ** 2 + (self.z - v.z) ** 2)
-
-    def to_position(self, v):
-        self.x = v.x - self.x
-        self.y = v.y - self.y
-        self.z = v.z - self.z
-
-    def add(self, v):
-        self.x += v.x
-        self.y += v.y
-        self.z += v.z
-
-    def sub(self, v):
-        self.x -= v.x
-        self.y -= v.y
-        self.z -= v.z
-
-    def multiply(self, v):
-        self.x *= v.x
-        self.y *= v.y
-        self.z *= v.z
-
     @property
     def len(self):
         return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
 
     @len.setter
     def len(self, len):
-        coef = len / math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2)
-        self.x *= coef
-        self.y *= coef
-        self.z *= coef
+        if self.len == 0:
+            self.x = self.y = self.z = len * math.sqrt(3)
+        else:
+            coef = len / self.len
+            self.x *= coef
+            self.y *= coef
+            self.z *= coef

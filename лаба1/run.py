@@ -1,37 +1,47 @@
 from лаба1.Vector3 import Vector3
-from лаба1.Space import Space
-from лаба1.celestialMechanics import CelestialBody
+from лаба1.celestialMechanics import CelestialBody, Space
 from лаба1.ui import UserInterface
+import time
 
 space = Space()
 
-space.add_body(CelestialBody(
-    position=Vector3(0, 0),
-    velocity=Vector3(0, 0),
-    mass=50,
-    radius=5,
+# ========================================== ЗАДАТЬ КОСМИЧЕСКИЕ ТЕЛА ============================================
+
+space.bodies.append(CelestialBody(
+    position=Vector3(),
+    velocity=Vector3(),
+    mass=1000,
+    radius=12,
     color="red",
 ))
 
-space.add_body(CelestialBody(
-    position=Vector3(0, 50),
-    velocity=Vector3(3, 0),
-    mass=50,
-    radius=5,
+space.bodies.append(CelestialBody(
+    position=Vector3(y=100),
+    velocity=Vector3(x=4),
+    mass=100,
+    radius=8,
     color="blue",
 ))
 
-space.add_body(CelestialBody(
-    position=Vector3(0, -50),
-    velocity=Vector3(-2, 0),
+space.bodies.append(CelestialBody(
+    position=Vector3(y=-100),
+    velocity=Vector3(x=-8),
     mass=50,
     radius=5,
     color="green",
 ))
 
+# ========================================== ЗАДАТЬ КОСМИЧЕСКИЕ ТЕЛА ============================================
+
 ui = UserInterface(
     space=space,
-    w=1000,
-    h=800
+    w=800,
+    h=600
 )
-ui.run()
+
+dt = .05
+# todo выключать программу после закрытия окна
+while True:
+    ui.step()
+    space.step(dt)
+    time.sleep(dt)
