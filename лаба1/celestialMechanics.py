@@ -37,6 +37,7 @@ class Space:
         # сначала рассчитать действующие силы
         for i in range(len(self.bodies)):
             body = self.bodies[i]
+            print(body.position)
             for j in range(len(self.bodies)):
                 force_body = self.bodies[j]
                 if body != force_body:
