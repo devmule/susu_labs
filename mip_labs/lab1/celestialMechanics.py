@@ -1,4 +1,4 @@
-from лаба1.Vector3 import Vector3
+from lab1.Vector3 import Vector3
 
 #          m_1 * m_2
 # F = G * -----------   - сила, действующая на тела

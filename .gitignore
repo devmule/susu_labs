@@ -1,3 +1,4 @@
-/venv/
+/mip_labs/venv/
+/mip_labs/venv/
 .idea
 *__pycache__

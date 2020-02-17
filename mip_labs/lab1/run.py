@@ -1,6 +1,6 @@
-from лаба1.Vector3 import Vector3
-from лаба1.celestialMechanics import CelestialBody, Space
-from лаба1.ui import UserInterface
+from lab1.Vector3 import Vector3
+from lab1.celestialMechanics import CelestialBody, Space
+from lab1.ui import UserInterface
 import time
 
 space = Space()
