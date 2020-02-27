@@ -1,4 +1,4 @@
-import json
+import random
 
 
 def element_id(array, search_elem):
@@ -24,19 +24,21 @@ rights_decodes = {
 class System:
     def __init__(self):
 
-        # ========== system settings ==========
-
-        self.user_file = 'users.json'
         self.objects = ["file_1", "file_2", "CD-RW", "drive"]
+        self.users = {'Admin': []}
 
-        with open(self.user_file) as json_file:
-            self.users = json.load(json_file)
+        for obj in self.objects:
+            self.users['Admin'].append('111')
+        users = ['guest', 'Vasya', 'Petya', 'Maxim']
+        for user in users:
+            self.users[user] = []
+            for obj in self.objects:
+                self.users[user].append(
+                    str(int(random.randint(0, 1))) + str(int(random.randint(0, 1))) + str(int(random.randint(0, 1))))
 
-        # ========== runtime values ==========
         self.current_user = None
         self.current_act = 0
 
-    # ========== system methods ==========
     def run(self):
         while True:
             self.log_in()
@@ -116,12 +118,10 @@ class System:
         rights = list(self.users[user][obj_id])
         rights[right_id] = str(int(val))
         self.users[user][obj_id] = "".join(rights)
-        with open(self.user_file, "w") as write_file:
-            json.dump(self.users, write_file)
 
     def log_in(self):
         while self.current_user is None:
-            name = input('Введите имя пользоателя > ')
+            name = input('Введите имя пользователя > ')
             if name in self.users.keys():
                 self.current_user = name
                 print('\nВход осуществлён. Добро пожаловать! \nперечень ваших прав:')
