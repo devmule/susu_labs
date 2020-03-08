@@ -5,3 +5,4 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(LagrangePolynomial LagrangePolynomial.c)
 add_executable(JordanMethod JordanMethod.c)
+add_executable(Damas Damas.c)
