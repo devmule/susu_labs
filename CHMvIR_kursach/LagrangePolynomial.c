@@ -21,16 +21,21 @@ int main(void) {
     double *xt = (double *) malloc(size * sizeof(double));
     double *yt = (double *) malloc(size * sizeof(double));
 
-    FILE *input_file = fopen("C:\\Users\\79227\\Desktop\\susu_labs\\CHMvIR_kursach\\input2.txt", "r");
-    if (input_file == NULL) return 0;
+    FILE *input_file = fopen("..\\input2.txt", "r");
+    FILE *output_file = fopen("..\\output2.txt", "w");
+    if (input_file == NULL || output_file == NULL) return 0;
+
     for (int i = 0; i < size; i++) {
         fscanf(input_file, "%lf", &xt[i]);
         fscanf(input_file, "%lf", &yt[i]);
     }
     fclose(input_file);
 
-    for (double j = 0; j <= 7; j += 0.1) {
-        printf("%lf : %lf\n", j, lagr(size, xt, yt, j));
+    double y;
+    for (double x = 0; x < 7; x += 0.1) {
+        y = lagr(size, xt, yt, x);
+        printf("%lf : %lf\n", x, y);
+        fprintf(output_file, "%lf : %lf\n", x, y);
     }
 
     return 0;

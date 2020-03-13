@@ -22,32 +22,51 @@ void check_multiply(int n, const double *a, const double *b) {
     }
 }
 
+double det(int n, const double *a) {
+    double d = 0;
+    double tmp_plus, tmp_minus;
+    for (int i = 0; i < n; i++) {
+        tmp_plus = tmp_minus = 1;
+        for (int j = 0; j < n; j++) {
+            tmp_plus *= a[j * n + (i + j) % n];
+            tmp_minus *= a[j * n + (n + i - j) % n];
+        }
+        d += tmp_plus - tmp_minus;
+    }
+    printf("%f", d);
+    return d;
+}
+
 int invmatr(int n, const double *a, double *b) {
+    if (det(n, a) == 0.0) return 0;
+
     double *x = (double *) malloc(n * n * sizeof(double));
-    for (int i = 0; i < n * n; i++) {
-        x[i] = a[i];
-        b[i] = i % (n + 1) == 0 ? 1.0 : 0.0;
+    for (int i = 0; i < n * n; i++) { // представляем расширенную матрицу как две обычные матрицы
+        x[i] = a[i]; // копия матрицы a, т.к. исходную менять нельзя, эта матрица будет левой частью
+        b[i] = i % (n + 1) == 0 ? 1.0 : 0.0; // правая часть "расширенной матрицы"
     }
 
     double tmp;
-    for (int k = 0; k < n; k++) {
-        tmp = x[k * n + k]; // разрешающий элемент
+    for (int k = 0; k < n; k++) { // для каждой строки
+        tmp = x[k * n + k]; // находим разрешающий элемент
         if (tmp == 0) return 0; // проверка на вырожденность
         for (int j = 0; j < n; j++) {
             x[k * n + j] /= tmp;
             b[k * n + j] /= tmp;
-        }
-        for (int i = k + 1; i < n; i++) {
-            tmp = x[i * n + k];
+        } // делим строку на число, равное элементу на диагонали, чтобы находящийся на диагонали элемент был равен "1"
+
+        for (int i = k + 1; i < n; i++) { // для каждой строки ниже текущей
+            tmp = x[i * n + k]; // находим разрешающий элемент
             for (int j = 0; j < n; ++j) {
                 x[i * n + j] -= x[k * n + j] * tmp;
                 b[i * n + j] -= b[k * n + j] * tmp;
-            }
+            }// вычитаем из под-строки строку, над которой работаем сейчас, домноженную на tmp,
+            // чтобы все элементы ниже разрешающего стали равны нулю
         }
     }
-    for (int k = n - 1; k > 0; k--) {
+    for (int k = n - 1; k > 0; k--) { // обратный ход, избавляемя от не-нулей выше главной диагонали
         for (int i = k - 1; i >= 0; i--) {
-            tmp = x[i * n + k]; // разрешающий элемент, проверка не нужна, т.к. диагональ уже единичная
+            tmp = x[i * n + k]; // разрешающий элемент
             for (int j = 0; j < n; ++j) {
                 x[i * n + j] -= x[k * n + j] * tmp;
                 b[i * n + j] -= b[k * n + j] * tmp;
@@ -58,12 +77,12 @@ int invmatr(int n, const double *a, double *b) {
 }
 
 int main() {
-    FILE *input_file = fopen("C:\\Users\\79227\\Desktop\\susu_labs\\CHMvIR_kursach\\input1.txt", "r");
+    FILE *input_file = fopen("..\\input1.txt", "r");
     if (input_file == NULL) return 0;
 
     int n;
     printf("%s", "write n: ");
-    n = (int) getchar() - 48; // ASCII символы - цифры стартуют с 48
+    scanf("%d", &n);
 
     double *A, *B, *X;
     A = (double *) malloc(n * n * sizeof(double));
