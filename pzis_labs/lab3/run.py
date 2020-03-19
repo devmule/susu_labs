@@ -1,5 +1,5 @@
 import json
-from Decryptor import Decryptor
+import Encoder
 
 with open('dict.json') as json_file:
     dictionary = json.load(json_file)
@@ -17,7 +17,25 @@ while IS_RUN:
     com_words = command.split(' ')
 
     if com_words[0] == 'decode':
+        # decoded_file = open('decoded.txt', 'w')
+        encoded_file = open('encoded.txt', 'r')
+        dictionary_frequency = {}
+        text_frequency = {}
+        for word in dictionary:
+            for letter in word:
+                if letter.upper() in Encoder.alphabet:
+                    if letter.upper() in dictionary_frequency.keys():
+                        dictionary_frequency[letter.upper()] += 1
+                    else:
+                        dictionary_frequency[letter.upper()] = 1
+        # print(dictionary_frequency)
+        text = encoded_file.read()
+        for letter in text:
+            if letter.upper() in Encoder.alphabet:
+                pass
         # todo make
+        # try ceasar shifer
+
         print('\nDONE!\n')
         IS_RUN = False
 
@@ -26,19 +44,19 @@ while IS_RUN:
             if com_words[1] == 'caesar':
                 decoded_file = open('decoded.txt', 'r')
                 encoded_file = open('encoded.txt', 'w')
-                encoded_file.write(Decryptor.caesar_encode(decoded_file.read()))
+                encoded_file.write(Encoder.caesar_encode(decoded_file.read()))
                 print('\nDONE!\n')
                 IS_RUN = False
             elif com_words[1] == 'vigenere':
                 decoded_file = open('decoded.txt', 'r')
                 encoded_file = open('encoded.txt', 'w')
-                encoded_file.write(Decryptor.vigenere_encode(decoded_file.read()))
+                encoded_file.write(Encoder.vigenere_encode(decoded_file.read()))
                 print('\nDONE!\n')
                 IS_RUN = False
             elif com_words[1] == 'playfair':
                 decoded_file = open('decoded.txt', 'r')
                 encoded_file = open('encoded.txt', 'w')
-                encoded_file.write(Decryptor.playfair_encode(decoded_file.read()))
+                encoded_file.write(Encoder.playfair_encode(decoded_file.read()))
                 print('\nDONE!\n')
                 IS_RUN = False
             else:
