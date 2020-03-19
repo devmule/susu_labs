@@ -32,11 +32,12 @@ int main(void) {
     fclose(input_file);
 
     double y;
-    for (double x = 0; x < 7; x += 0.1) {
+    for (double x = 0; x < size - 1; x += 0.1) {
         y = lagr(size, xt, yt, x);
         printf("%lf : %lf\n", x, y);
         fprintf(output_file, "%lf : %lf\n", x, y);
     }
+    fclose(output_file);
 
     return 0;
 }
