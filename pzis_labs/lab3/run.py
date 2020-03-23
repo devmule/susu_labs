@@ -1,5 +1,5 @@
 import json
-import Encoder
+from Encoder import Encoder
 
 with open('dict.json') as json_file:
     dictionary = json.load(json_file)

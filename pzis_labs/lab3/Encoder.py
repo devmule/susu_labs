@@ -1,5 +1,5 @@
 class Encoder:
-    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ .,!?'
 
     caesar_shift = 3
     vigenere_key = 'vigenere'
