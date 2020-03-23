@@ -1,9 +1,6 @@
 import json
 from Encoder import Encoder
-
-with open('dict.json') as json_file:
-    dictionary = json.load(json_file)
-json_file.close()
+from Decoder import Decoder
 
 command = ''  # command user write
 IS_RUN = True
@@ -11,49 +8,33 @@ IS_RUN = True
 print('\nlist of commands:\n'
       '1) decode - decode word from file \'encoded\' and write to file \'decoded\'\n'
       '2) encode < ENCODE TYPE > - encode, where type is in [caesar, vigenere, playfair]')
-print('dictionary length =', len(dictionary), '\n')
+print('dictionary length =', len(Decoder.dictionary), '\n')
 while IS_RUN:
     command = input('#> ').strip()
     com_words = command.split(' ')
 
-    if com_words[0] == 'decode':
+    if com_words[0].lower() == 'decode':
         # decoded_file = open('decoded.txt', 'w')
         encoded_file = open('encoded.txt', 'r')
-        dictionary_frequency = {}
-        text_frequency = {}
-        for word in dictionary:
-            for letter in word:
-                if letter.upper() in Encoder.alphabet:
-                    if letter.upper() in dictionary_frequency.keys():
-                        dictionary_frequency[letter.upper()] += 1
-                    else:
-                        dictionary_frequency[letter.upper()] = 1
-        # print(dictionary_frequency)
-        text = encoded_file.read()
-        for letter in text:
-            if letter.upper() in Encoder.alphabet:
-                pass
-        # todo make
-        # try ceasar shifer
-
+        print(Decoder.decode(encoded_file.read()))
         print('\nDONE!\n')
         IS_RUN = False
 
-    elif com_words[0] == 'encode':
+    elif com_words[0].lower() == 'encode':
         if len(com_words) >= 2:
-            if com_words[1] == 'caesar':
+            if com_words[1].lower() == 'caesar':
                 decoded_file = open('decoded.txt', 'r')
                 encoded_file = open('encoded.txt', 'w')
                 encoded_file.write(Encoder.caesar_encode(decoded_file.read()))
                 print('\nDONE!\n')
                 IS_RUN = False
-            elif com_words[1] == 'vigenere':
+            elif com_words[1].lower() == 'vigenere':
                 decoded_file = open('decoded.txt', 'r')
                 encoded_file = open('encoded.txt', 'w')
                 encoded_file.write(Encoder.vigenere_encode(decoded_file.read()))
                 print('\nDONE!\n')
                 IS_RUN = False
-            elif com_words[1] == 'playfair':
+            elif com_words[1].lower() == 'playfair':
                 decoded_file = open('decoded.txt', 'r')
                 encoded_file = open('encoded.txt', 'w')
                 encoded_file.write(Encoder.playfair_encode(decoded_file.read()))
