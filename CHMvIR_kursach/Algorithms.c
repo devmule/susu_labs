@@ -29,6 +29,7 @@ double newtonMethod(double (*f)(double), double (*df)(double), double x0, const 
 //========= метод секущих ==========================
 double secantMethod(double (*f)(double), double x0, double x1, double eps) {
     double res, y;
+    // todo доделать
     do {
         y = res;
         res = x1 - ((x1 - x0) / (f(x1) - f(x0))) * f(x1);
