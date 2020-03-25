@@ -22,24 +22,15 @@ void check_multiply(int n, const double *a, const double *b) {
     }
 }
 
-double det(int n, const double *a) {
-    double d = 0;
-    double tmp_plus, tmp_minus;
-    for (int i = 0; i < n; i++) {
-        tmp_plus = tmp_minus = 1;
-        for (int j = 0; j < n; j++) {
-            tmp_plus *= a[j * n + (i + j) % n];
-            tmp_minus *= a[j * n + (n + i - j) % n];
-        }
-        d += tmp_plus - tmp_minus;
+void swap(int n, int i, int j, double *a, double *b) {
+    double tmpa = *(double *) malloc(n * sizeof(double));
+    double tmpb = *(double *) malloc(n * sizeof(double));
+    for (int k = 0; k < n; k++) {
+
     }
-    printf("%f", d);
-    return d;
 }
 
 int invmatr(int n, const double *a, double *b) {
-    if (det(n, a) == 0.0) return 0;
-
     double *x = (double *) malloc(n * n * sizeof(double));
     for (int i = 0; i < n * n; i++) { // представляем расширенную матрицу как две обычные матрицы
         x[i] = a[i]; // копия матрицы a, т.к. исходную менять нельзя, эта матрица будет левой частью
@@ -49,8 +40,10 @@ int invmatr(int n, const double *a, double *b) {
     double tmp;
     for (int k = 0; k < n; k++) { // для каждой строки
         tmp = x[k * n + k]; // находим разрешающий элемент
-        if (tmp == 0) return 0; // проверка на вырожденность
+        if (tmp == 0) return 0; // fixme проверка на вырожденность, диагональные миноры
         for (int j = 0; j < n; j++) {
+            // todo сюда прописать проверку - перебор каждой строчки на наличие ненулевого элемента
+            //  https://cyberleninka.ru/article/n/bezoshibochnoe-reshenie-sistem-lineynyh-algebraicheskih-uravneniy
             x[k * n + j] /= tmp;
             b[k * n + j] /= tmp;
         } // делим строку на число, равное элементу на диагонали, чтобы находящийся на диагонали элемент был равен "1"
