@@ -31,15 +31,11 @@ int main(void) {
     }
     fclose(input_file);
 
-    double y, x = 0.0; // от 0
-    for (;;) {
-        if (x > 7) break; // до 7 включительно
-        else {
-            y = lagr(size, xt, yt, x);
-            printf("%f : %lf\n", x, y); // вывод в консоль
-            fprintf(output_file, "%f : %lf\n", x, y); // вывод в файл
-            x += 0.1; // с шагом 0.1
-        }
+    double y;
+    for (double x = 0; x < size - 1; x += 0.1) {
+        y = lagr(size, xt, yt, x);
+        printf("%lf : %lf\n", x, y);
+        fprintf(output_file, "%lf : %lf\n", x, y);
     }
     fclose(output_file);
 
