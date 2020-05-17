@@ -1,4 +1,5 @@
 class Encoder:
+    """Этот модуль содержит в себе алфавит и методы для шифровки и расшифровки тремя алгоритмами шифрования"""
     alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ,.!()-\"\';:%*?&'
 
     @staticmethod
@@ -37,7 +38,8 @@ class Encoder:
     @staticmethod
     def playfair_encode(word: str, playfair_key: str = 'KEY') -> str:
         playfair_matrix = ''
-        playfair_mw = 5  # !!! IMPORTANT !!! ( playfair_mw * playfair_mh ) MUST BE INTEGER !!!
+        playfair_mw = 5
+        # !!! IMPORTANT !!! ( playfair_mw * playfair_mh ) MUST BE INTEGER !!!
 
         for letter in playfair_key + Encoder.alphabet:
             letter = letter.upper()
@@ -68,9 +70,46 @@ class Encoder:
             new_word += playfair_matrix[ay * playfair_mw + ax] + playfair_matrix[by * playfair_mw + bx]
         return new_word
 
+    @staticmethod
+    def playfair_decode(word: str, playfair_key: str = 'KEY') -> str:
+        playfair_matrix = ''
+        playfair_mw = 5
+        # !!! IMPORTANT !!! ( playfair_mw * playfair_mh ) MUST BE INTEGER !!!
+
+        for letter in playfair_key + Encoder.alphabet:
+            letter = letter.upper()
+            if letter == 'J': letter = 'I'
+            if letter not in playfair_matrix:
+                playfair_matrix += letter
+        playfair_mh = int(len(playfair_matrix) / playfair_mw)
+
+        new_word = ''
+        word = word.upper()
+
+        for i in range(len(word) - 1, -1, -1):  # delete all symbols which not in alphabet
+            if word[i] not in Encoder.alphabet: word = word[:i] + word[i + 1:]
+        if len(word) % 2: word += 'X'
+        for i in range(int(len(word) / 2)):
+            a, b = word[i * 2], word[i * 2 + 1]
+            if a == "J": a = "I"
+            if b == "J": b = "I"
+            if a == b: b = 'X'
+            ay, ax = divmod(playfair_matrix.index(a), playfair_mw)
+            by, bx = divmod(playfair_matrix.index(b), playfair_mw)
+            if ay == by:  # if in one string
+                ax = (ax - 1) % playfair_mw
+                bx = (bx - 1) % playfair_mw
+            elif ax == bx:  # in in one column
+                ay = (ay - 1) % playfair_mh
+                by = (by - 1) % playfair_mh
+            else:  # if in different strings and columns
+                bx, ax = ax, bx
+            new_word += playfair_matrix[ay * playfair_mw + ax] + playfair_matrix[by * playfair_mw + bx]
+        return new_word
+
 
 if __name__ == '__main__':
     print(len(Encoder.alphabet))
     print(Encoder.caesar_encode('hello'))  # KHOOR
-    print(Encoder.vigenere_encode('hello'))  # .MRP,
-    print(Encoder.playfair_encode('hello'))  # KGYVSV
+    print(Encoder.vigenere_encode('hello'))  # RI;VS
+    print(Encoder.playfair_decode('hello'))  # DBNVNZ

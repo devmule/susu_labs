@@ -1,6 +1,8 @@
 import json
 from Encoder import Encoder
-from typing import Dict
+from typing import Dict, Tuple
+import difflib  # для проверки похожести
+import random  # для метода симуляции обжига
 
 
 class Decoder:
@@ -11,79 +13,76 @@ class Decoder:
     json_file.close()
 
     @staticmethod
-    def decode(encoded_text: str) -> str:
-        caesar_key, caesar_frequency = Decoder.decode_caesar(encoded_text)
-        print('caesar:', '\nkey: ', caesar_key, '\nfrequency: ', caesar_frequency, '\n')
-        return Encoder.caesar_decode(encoded_text, caesar_key)
-        """vigenere_key, vigenere_frequency = Decoder.decode_vigenere(encoded_text)
-        print('vigenere:', '\nkey: ', vigenere_key, '\nfrequency: ', vigenere_frequency, '\n',
-              Encoder.vigenere_decode(encoded_text, vigenere_key))"""
+    def decode(encoded_text: str, min_frequency: float = 0.2, max_iteration: int = 9000) -> str:
+        cache: Dict[str, float] = {}
+        best_frequency = 0
+        best_key = ""
+        best_text = ""
+
+        # метод Виженера с одной буквой в качестве ключа всё равно что метод цезаря
+        '''for i in range(len(Decoder.alphabet)):  # len 1
+            for decoded in [Encoder.caesar_decode(encoded_text, i),
+                            Encoder.playfair_decode(encoded_text, Decoder.alphabet[i])]:
+                f = Decoder.text_frequency(decoded)
+                if f > best_frequency:
+                    best_frequency = f
+                    best_key = Decoder.alphabet[i]
+                if f > min_frequency:
+                    return decoded'''
+
+        # len > 1
+        best_key += Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)]
+        for i in range(max_iteration):
+            # добавляется случайный знак из алфавита
+            key = best_key
+            for new_key in [Decoder.mutate_key(key) for x in range(3)]:
+                if new_key in cache.keys(): continue
+                for decoded in [Encoder.vigenere_decode(encoded_text, new_key),
+                                Encoder.playfair_decode(encoded_text, new_key)]:
+                    f = Decoder.text_frequency(decoded)
+                    cache[new_key] = f
+                    print(i, new_key, f, best_key)
+                    if f > best_frequency:
+                        best_frequency = f
+                        best_key = new_key
+                        best_text = decoded
+                    if f > min_frequency:
+                        return decoded
+        return best_text
 
     @staticmethod
-    def decode_caesar(encoded_text: str, min_frequency: float = .9):
-        best_key = 0
-        best_frequency = 0
-        for key in range(len(Decoder.alphabet)):
-            print('try key', key, end='')
-            decoded = Encoder.caesar_decode(encoded_text, key).split(' ')
-            frequency_sum = 0
-            for word in decoded:
-                for d in Decoder.dictionary:
-                    if Decoder.similarity(word.upper(), d.upper()) > .75:
-                        frequency_sum += 1
-                        break
-            frequency = frequency_sum / len(decoded)
-            print(' frequency = ', frequency)
-            if frequency > best_frequency:
-                best_key = key
-                best_frequency = frequency
-            if frequency > min_frequency: break
-        return best_key, best_frequency
+    def mutate_key(key: str) -> str:
+        if random.random() > .9 and len(key) > 1:  # с шансом 1/10 удаляется случайная буква
+            r = random.randint(0, len(key) - 1)
+            return key[:r] + key[r - 1:]
+        if random.random() < .1:  # с шансом 1/10 добавляется случайная буква
+            r = random.randint(0, len(key))
+            return key[:r] + Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)] + key[r:]
+        else:  # иначе меняется случайная буква
+            k = list(key)
+            k[random.randint(0, len(key) - 1)] = Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)]
+            return "".join(k)
 
     @staticmethod
-    def decode_vigenere(encoded_text: str, min_frequency: float = .8):
-        best_key = "A"
-        best_frequency = 0
-        for key in [x for x in Decoder.alphabet] + \
-                   [x + y for x in Decoder.alphabet for y in Decoder.alphabet] + \
-                   [x + y + z for x in Decoder.alphabet for y in Decoder.alphabet for z in Decoder.alphabet]:
-            print('try key', key, end='')
-            decoded = Encoder.vigenere_decode(encoded_text, key).split(' ')
-            frequency_sum = 0
-            for word in decoded:
-                for d in Decoder.dictionary:
-                    if Decoder.similarity(word.upper(), d.upper()) > .75:
-                        frequency_sum += 1
-                        break
-            frequency = frequency_sum / len(decoded)
-            print(' frequency = ', frequency)
-            if frequency > best_frequency:
-                best_key = key
-                best_frequency = frequency
-            if frequency > min_frequency: break
-        return best_key, best_frequency
+    def text_frequency(text: str) -> float:
+        frequency_sum = 0
+        text = text.split(" ")
+        for word in text:
+            for d in Decoder.dictionary:
+                if Decoder.similarity(word.upper(), d.upper()) > .75:
+                    frequency_sum += 1
+        return frequency_sum / len(text)
 
     @staticmethod
     def similarity(text_1: str, text_2: str) -> float:
-        summary = max(len(text_1), len(text_2))
-        similarities = 0
-        for i in range(min(len(text_1), len(text_2))):
-            if text_1[i].upper() == text_2[i].upper():
-                similarities += 1
-        return similarities / summary
-
-    @staticmethod
-    def letter_frequency(text: str) -> Dict[str, float]:  # deprecated
-        frequency: Dict[str, float] = {}
-        for letter in text:
-            if letter.upper() in frequency.keys():
-                frequency[letter.upper()] += 1
-            else:
-                frequency[letter.upper()] = 1
-        return frequency
+        normalized1 = text_1.lower()
+        normalized2 = text_2.lower()
+        matcher = difflib.SequenceMatcher(None, normalized1, normalized2)
+        return matcher.ratio()
 
 
 if __name__ == '__main__':
-    print(Decoder.similarity('text_1', 'text_2'))  # = 0.83
+    print(Decoder.similarity('text_1', 'text_2'))  # = 0.8333333333333334
     print(Decoder.similarity('text_1', 'text_1'))  # = 1
     print(Decoder.similarity('text', 'hi, world'))  # = 0
+    Decoder.decode("123123")
