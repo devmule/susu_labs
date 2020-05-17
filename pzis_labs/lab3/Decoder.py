@@ -63,9 +63,9 @@ class Decoder:
         if random.random() > .9:  # с шансом ~ 1/10 добавляется случайная буква
             r = random.randint(0, len(key))
             return key[:r] + Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)] + key[r:]
-        elif random.random() > .8 and len(key) > 1 or len(key) > 4:  # с шансом ~ 1/10 удаляется случайная буква
+        elif random.random() > .8 and len(key) > 1:  # с шансом ~ 1/10 удаляется случайная буква
             r = random.randint(0, len(key) - 1)
-            return key[:r] + key[r + 1:]
+            return key[:r] + key[r - 1:]
         elif random.random() > .7 and len(key) > 1:  # с шансом ~ 1/10 перемешивается
             l = list(key)
             random.shuffle(l)
@@ -90,12 +90,14 @@ class Decoder:
         def check(check_word):
             for d in Decoder.dictionary:  # сравнивается с каждым словом словаря
                 # если слово похоже хотя бы на 75%, то оно опознано
-                return Decoder.similarity(check_word.upper(), d.upper()) > .75
+                if Decoder.similarity(check_word.upper(), d.upper()) > .75:
+                    return True
             return False
 
-        for word in text:
+        for i in range(len(text)):
+            word = text[i]
             # проверяется каждое слово в тексте
-            if frequency_sum >= return_in_zero and frequency_sum == 0: break
+            if i >= return_in_zero and frequency_sum == 0: break
             if check(word): frequency_sum += 1
         return frequency_sum / len(text)
 
