@@ -23,21 +23,33 @@ while IS_RUN:
     elif com_words[0].lower() == 'encode':
         if len(com_words) >= 2:
             if com_words[1].lower() == 'caesar':
+                print("enter key (spaces are symbols too), or press enter for default")
+                key = input('# key > ')
+                if len(key) > 0: key = int(key)
+                else: key = None
                 decoded_file = open('decoded.txt', 'r')
                 encoded_file = open('encoded.txt', 'w')
-                encoded_file.write(Encoder.caesar_encode(decoded_file.read()))
+                encoded_file.write(Encoder.caesar_encode(decoded_file.read(), key or 3))
                 print('\nDONE!\n')
                 IS_RUN = False
             elif com_words[1].lower() == 'vigenere':
+                print("enter key (spaces are symbols too), or press enter for default")
+                key = input('# key > ')
+                if len(key) > 0: key = key.strip()
+                else: key = None
                 decoded_file = open('decoded.txt', 'r')
                 encoded_file = open('encoded.txt', 'w')
-                encoded_file.write(Encoder.vigenere_encode(decoded_file.read()))
+                encoded_file.write(Encoder.vigenere_encode(decoded_file.read(), key or "KEY"))
                 print('\nDONE!\n')
                 IS_RUN = False
             elif com_words[1].lower() == 'playfair':
+                print("enter key (spaces are symbols too), or press enter for default")
+                key = input('# key > ')
+                if len(key) > 0: key = key.strip()
+                else: key = None
                 decoded_file = open('decoded.txt', 'r')
                 encoded_file = open('encoded.txt', 'w')
-                encoded_file.write(Encoder.playfair_encode(decoded_file.read()))
+                encoded_file.write(Encoder.playfair_encode(decoded_file.read(), key or "KEY"))
                 print('\nDONE!\n')
                 IS_RUN = False
             else:

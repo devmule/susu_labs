@@ -107,10 +107,3 @@ class Encoder:
                 bx, ax = ax, bx
             new_word += playfair_matrix[ay * playfair_mw + ax] + playfair_matrix[by * playfair_mw + bx]
         return new_word
-
-
-if __name__ == '__main__':
-    print(len(Encoder.alphabet))
-    print(Encoder.caesar_encode('hello'))  # KHOOR
-    print(Encoder.vigenere_encode('hello'))  # RI;VS
-    print(Encoder.playfair_decode('hello'))  # DBNVNZ
