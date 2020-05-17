@@ -8,6 +8,9 @@ import random  # для метода иммитации обжига (с пос�
 
 
 class Decoder:
+    """Этот модуль содержит в себе метод дешифровки
+    путём подбора ключа методом иммитации отжига
+    и проверки с помощью метода частотного анализа"""
     alphabet = Encoder.alphabet
 
     with open('dict.json') as json_file:
@@ -15,67 +18,72 @@ class Decoder:
     json_file.close()
 
     @staticmethod
-    def decode(encoded_text: str, min_frequency: float = 0.3, max_iteration: int = 9000) -> str:
+    def decode(encoded_text: str, min_frequency: float = 0.3, max_iteration: int = 1000) -> str:
         cache: Dict[str, float] = {}
         best_frequency = 0
         best_key = ""
         best_text = ""
 
-        # метод Виженера с одной буквой в качестве ключа всё равно что метод цезаря
-        '''for i in range(len(Decoder.alphabet)):  # len 1
-            for decoded in [Encoder.caesar_decode(encoded_text, i),
-                            Encoder.playfair_decode(encoded_text, Decoder.alphabet[i])]:
-                f = Decoder.text_frequency(decoded)
-                if f > best_frequency:
-                    best_frequency = f
-                    best_key = Decoder.alphabet[i]
-                if f > min_frequency:
-                    return decoded'''
-
-        # len > 1
+        # добавляется случайный знак из алфавита
         best_key += Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)]
-        for i in range(max_iteration):
-            # добавляется случайный знак из алфавита
-            key = best_key
-            for new_key in [Decoder.mutate_key(key, math.ceil((min_frequency - best_frequency) * 10)) for x in range(3)]:
-                if new_key in cache.keys(): continue
-                for decoded in [Encoder.vigenere_decode(encoded_text, new_key),
-                                Encoder.playfair_decode(encoded_text, new_key)]:
-                    f = Decoder.text_frequency(decoded)
-                    cache[new_key] = f
-                    print(i, new_key, f, best_key)
-                    if f > best_frequency:
-                        best_frequency = f
-                        best_key = new_key
-                        best_text = decoded
-                    if f > min_frequency:
-                        return decoded
+        iteration = 0
+        # пока не достигли требуемой частоты или не прошли максимальное количество итераций
+        while best_frequency < min_frequency and iteration < max_iteration:
+
+            # создаётся ключ - мутант. чем больше разница, тем сильнее мутация
+            new_key = best_key
+            mutations = math.ceil((min_frequency - best_frequency) * 10)
+            for i in range(mutations): new_key = Decoder.mutate_key(new_key)
+
+            # если такой был - продолжаем, не теряем на него времени
+            if new_key in cache.keys(): continue
+            iteration += 1
+
+            # иначе - декодируем методы Виженера и Плейфера
+            # метод Виженера с одной буквой в качестве ключа всё равно что метод цезаря
+            for decoded in [Encoder.vigenere_decode(encoded_text, new_key),
+                            Encoder.playfair_decode(encoded_text, new_key)]:
+
+                f = Decoder.text_frequency(decoded)  # частота
+                # новый ключ, чтобы не повторять его в следующий раз
+                cache[new_key] = f
+                print(iteration, new_key, f, best_key)
+
+                if f > best_frequency:
+                    # если мутант лучше чем предыдущий ключ, то мы идём в правильном направлении,
+                    # записываем мутанта как лучший ключ на данный момент
+                    best_frequency = f
+                    best_key = new_key
+                    best_text = decoded
+
         return best_text
 
     @staticmethod
-    def mutate_key(key: str, iterations: int) -> str:
-        for i in range(iterations):
-            if random.random() > .9 and len(key) > 1:  # с шансом 1/10 удаляется случайная буква
-                r = random.randint(0, len(key) - 1)
-                key = key[:r] + key[r - 1:]
-            elif random.random() < .1:  # с шансом 1/10 добавляется случайная буква
-                r = random.randint(0, len(key))
-                key = key[:r] + Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)] + key[r:]
-            elif random.random() < .2 and len(key) > 1:  # с шансом 1/10 перемешивается
-                l = list(key)
-                random.shuffle(l)
-                key = ''.join(l)
-            else:  # иначе меняется случайная буква
-                k = list(key)
-                k[random.randint(0, len(key) - 1)] = Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)]
-                key = "".join(k)
-        return key
+    def mutate_key(key: str) -> str:
+        """функция рандомизации ключа"""
+        if random.random() > .9:  # с шансом 1/10 добавляется случайная буква
+            r = random.randint(0, len(key))
+            return key[:r] + Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)] + key[r:]
+        elif random.random() > .8 and len(key) > 1:  # с шансом 1/10 удаляется случайная буква
+            r = random.randint(0, len(key) - 1)
+            return key[:r] + key[r - 1:]
+        elif random.random() > .7 and len(key) > 1:  # с шансом 1/10 перемешивается
+            l = list(key)
+            random.shuffle(l)
+            return ''.join(l)
+        else:  # иначе меняется случайная буква
+            k = list(key)
+            k[random.randint(0, len(key) - 1)] = Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)]
+            return "".join(k)
 
     @staticmethod
-    def text_frequency(text: str) -> float:
+    def text_frequency(text: str, return_in_zero: int = 10) -> float:
+        """return_in_zero - количество слов, при проверке которых,
+        если ни одно не было опознано, прекращается опознание"""
         frequency_sum = 0
         text = text.split(" ")
         for word in text:
+            if frequency_sum >= return_in_zero and frequency_sum == 0: break
             for d in Decoder.dictionary:
                 if Decoder.similarity(word.upper(), d.upper()) > .75:
                     frequency_sum += 1
@@ -87,10 +95,3 @@ class Decoder:
         normalized2 = text_2.lower()
         matcher = difflib.SequenceMatcher(None, normalized1, normalized2)
         return matcher.ratio()
-
-
-if __name__ == '__main__':
-    print(Decoder.similarity('text_1', 'text_2'))  # = 0.8333333333333334
-    print(Decoder.similarity('text_1', 'text_1'))  # = 1
-    print(Decoder.similarity('text', 'hi, world'))  # = 0
-    Decoder.decode("123123")
