@@ -1,8 +1,10 @@
 import json
+import math
+
 from Encoder import Encoder
 from typing import Dict, Tuple
 import difflib  # для проверки похожести
-import random  # для метода симуляции обжига
+import random  # для метода иммитации обжига (с постоянной температурой)
 
 
 class Decoder:
@@ -13,7 +15,7 @@ class Decoder:
     json_file.close()
 
     @staticmethod
-    def decode(encoded_text: str, min_frequency: float = 0.2, max_iteration: int = 9000) -> str:
+    def decode(encoded_text: str, min_frequency: float = 0.3, max_iteration: int = 9000) -> str:
         cache: Dict[str, float] = {}
         best_frequency = 0
         best_key = ""
@@ -35,7 +37,7 @@ class Decoder:
         for i in range(max_iteration):
             # добавляется случайный знак из алфавита
             key = best_key
-            for new_key in [Decoder.mutate_key(key) for x in range(3)]:
+            for new_key in [Decoder.mutate_key(key, math.ceil((min_frequency - best_frequency) * 10)) for x in range(3)]:
                 if new_key in cache.keys(): continue
                 for decoded in [Encoder.vigenere_decode(encoded_text, new_key),
                                 Encoder.playfair_decode(encoded_text, new_key)]:
@@ -51,17 +53,23 @@ class Decoder:
         return best_text
 
     @staticmethod
-    def mutate_key(key: str) -> str:
-        if random.random() > .9 and len(key) > 1:  # с шансом 1/10 удаляется случайная буква
-            r = random.randint(0, len(key) - 1)
-            return key[:r] + key[r - 1:]
-        if random.random() < .1:  # с шансом 1/10 добавляется случайная буква
-            r = random.randint(0, len(key))
-            return key[:r] + Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)] + key[r:]
-        else:  # иначе меняется случайная буква
-            k = list(key)
-            k[random.randint(0, len(key) - 1)] = Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)]
-            return "".join(k)
+    def mutate_key(key: str, iterations: int) -> str:
+        for i in range(iterations):
+            if random.random() > .9 and len(key) > 1:  # с шансом 1/10 удаляется случайная буква
+                r = random.randint(0, len(key) - 1)
+                key = key[:r] + key[r - 1:]
+            elif random.random() < .1:  # с шансом 1/10 добавляется случайная буква
+                r = random.randint(0, len(key))
+                key = key[:r] + Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)] + key[r:]
+            elif random.random() < .2 and len(key) > 1:  # с шансом 1/10 перемешивается
+                l = list(key)
+                random.shuffle(l)
+                key = ''.join(l)
+            else:  # иначе меняется случайная буква
+                k = list(key)
+                k[random.randint(0, len(key) - 1)] = Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)]
+                key = "".join(k)
+        return key
 
     @staticmethod
     def text_frequency(text: str) -> float:
