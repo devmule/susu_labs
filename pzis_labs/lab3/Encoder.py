@@ -1,5 +1,5 @@
 class Encoder:
-    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ ,.!()-\"\';:%*?&'
 
     @staticmethod
     def caesar_encode(word: str, caesar_shift: int = 3) -> str:
@@ -11,7 +11,11 @@ class Encoder:
         return new_word
 
     @staticmethod
-    def vigenere_encode(word: str, vigenere_key: str = 'VIGENERE') -> str:
+    def caesar_decode(word: str, caesar_shift: int = 3) -> str:
+        return Encoder.caesar_encode(word, -caesar_shift)
+
+    @staticmethod
+    def vigenere_encode(word: str, vigenere_key: str = 'KEY') -> str:
         new_word = ''
         for i in range(len(word)):
             if word[i].upper() not in Encoder.alphabet: continue
@@ -21,7 +25,17 @@ class Encoder:
         return new_word
 
     @staticmethod
-    def playfair_encode(word: str, playfair_key: str = 'PLAYFAIR') -> str:
+    def vigenere_decode(word: str, vigenere_key: str = 'KEY') -> str:
+        new_word = ''
+        for i in range(len(word)):
+            if word[i].upper() not in Encoder.alphabet: continue
+            shift_index = -Encoder.alphabet.index(vigenere_key[i % len(vigenere_key)].upper())
+            index = (Encoder.alphabet.index(word[i].upper()) + shift_index) % len(Encoder.alphabet)
+            new_word += Encoder.alphabet[index]
+        return new_word
+
+    @staticmethod
+    def playfair_encode(word: str, playfair_key: str = 'KEY') -> str:
         playfair_matrix = ''
         playfair_mw = 5  # !!! IMPORTANT !!! ( playfair_mw * playfair_mh ) MUST BE INTEGER !!!
 
@@ -56,6 +70,7 @@ class Encoder:
 
 
 if __name__ == '__main__':
+    print(len(Encoder.alphabet))
     print(Encoder.caesar_encode('hello'))  # KHOOR
-    print(Encoder.vigenere_encode('hello'))  # CMRPB
+    print(Encoder.vigenere_encode('hello'))  # .MRP,
     print(Encoder.playfair_encode('hello'))  # KGYVSV

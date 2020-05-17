@@ -40,7 +40,7 @@ double bisectionMethod(double (*f)(double), double a, double b, const double eps
 
 //========= метод секущих ==========================
 double secantMethod(double (*f)(double), double x0, double x1, double eps) {
-    // работает только если выполняется условие  ' f(x0) * f(x1) < 0 '
+    // работает только если выполняется условие  ' f(x0) * f(x1) < 0'
     // сдвигать будем только одну сторону, другую рассчитаем заранее
     double y1, y0 = f(x0) / x0;
     for (;;) {
@@ -65,10 +65,28 @@ double f1(double x) { return x / 2 + 5; }
 
 double df1(double x) { return .5; }
 
+/* f – функция правой части x=f(x); e – погрешность; x – начальное приближении, которое потом заменяется на результат */
+int eqution(double f(double), double df(double), double e, double *x) {
+    double x1, delta = fabs((*x - (f(*x) / df(*x))) - *x);
+    for (;;) {
+        x1 = *x - (f(*x) / df(*x));
+        if (fabs(x1 - *x) > delta) return 0;
+        delta = fabs(x1 - *x);
+        if (fabs(x1 - *x) < e) break;
+        *x = x1;
+    }
+    return 1;
+}
+
 int main() {
     printf("x=%f\n", simpleIterationMethod(fx2, 1.5, 1E-10)); // x=7.580454
-    printf("x=%f\n", newtonMethod(f2, df2, 1.5, 1E-10)); // x=7.580454
-    printf("x=%f\n", bisectionMethod(f2, -20, 23, 1E-10)); // x=7.580454
-    printf("x=%f\n", secantMethod(f2, 1, 10, 1E-10)); // x=7.580454
+    //printf("x=%f\n", newtonMethod(f2, df2, 1.5, 1E-10)); // x=7.580454
+    //printf("x=%f\n", bisectionMethod(f2, -20, 23, 1E-10)); // x=7.580454
+    //printf("x=%f\n", secantMethod(f2, 1, 10, 1E-10)); // x=7.580454
+
+
+    double X = 0;
+    if (eqution(f1, df1, 1E-10, &X)) printf("x=%f\n", X);
+    else printf("cannot get X");
     return 0;
 }
