@@ -17,14 +17,15 @@ class Decoder:
     json_file.close()
 
     @staticmethod
-    def decode(encoded_text: str, min_frequency: float = 0.3, max_iteration: int = 10000) -> str:
+    def decode(encoded_text: str, key=None, min_frequency: float = 0.3, max_iteration: int = 10000) -> str:
         cache: Dict[str, float] = {}
         best_frequency = 0
-        best_key = ""
+        if key:
+            best_key = key
+        else:
+            best_key = Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)]
         best_text = ""
 
-        # добавляется случайный знак из алфавита
-        best_key += Decoder.alphabet[random.randint(0, len(Decoder.alphabet) - 1)]
         iteration = 0
         # пока не достигли требуемой частоты или не прошли максимальное количество итераций
         while best_frequency < min_frequency and iteration < max_iteration:
@@ -108,9 +109,3 @@ class Decoder:
         normalized2 = text_2.lower()
         matcher = difflib.SequenceMatcher(None, normalized1, normalized2)
         return matcher.ratio()
-
-
-if __name__ == "__main__":
-    encoded = Encoder.playfair_encode("hello, I am the one that can know you. What can you do?", "KEY")
-    decoded = Decoder.decode(encoded)
-    print(decoded)
