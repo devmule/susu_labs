@@ -5,5 +5,6 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(LagrangePolynomial LagrangePolynomial.c)
 add_executable(JordanMethod JordanMethod.c)
-add_executable(Algorithms Algorithms.c)
+add_executable(systemOfEquations systemOfEquations.c)
+add_executable(integrationAndDifferentiation  integrationAndDifferentiation.c)
 add_executable(test test.c)
