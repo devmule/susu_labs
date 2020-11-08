@@ -1,0 +1,23 @@
+body, html, #screen, #process{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#process {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 200px;
+    height: 200px;
+}
+
+#add-process-num, #add-process-btn, #select-process, #process-speed {
+    width: 100%;
+    height: 30px;
+}
+
+.process-item {
+
+}
