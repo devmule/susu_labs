@@ -42,21 +42,21 @@ public:
 
     Date &operator=(const Date &other);
 
-    bool operator==(Date &other);
+    bool operator==(const Date &other) const;
 
-    bool operator!=(Date &other);
+    bool operator!=(const Date &other) const;
 
-    bool operator>(Date &other);
+    bool operator>(const Date &other) const;
 
-    bool operator<(Date &other);
+    bool operator<(const Date &other) const;
 
     Date &operator++();
 
     Date &operator--();
 
-    const Date operator++(int value);
+    Date operator++(int value);
 
-    const Date operator--(int value);
+    Date operator--(int value);
 
     Date &operator+=(int n);
 
