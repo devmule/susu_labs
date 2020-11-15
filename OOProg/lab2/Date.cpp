@@ -62,35 +62,6 @@ void Date::addMonth(int n) {
         this->month += 12;
         this->year--;
     }
-    /*if (n >= 0) {
-        while (n > 0) {
-            if (n > 12) {
-                n -= 12;
-                this->year++;
-            } else {
-                this->month += n;
-                if (this->month > 12) {
-                    this->year++;
-                    this->month = this->month % 12;
-                }
-                n = 0;
-            }
-        }
-    } else {
-        while (n < 0) {
-            if (n < 12) {
-                n += 12;
-                this->year--;
-            } else {
-                this->month += n;
-                if (this->month < 0) {
-                    this->year--;
-                    this->month = (this->month + 12) % 12;
-                }
-                n = 0;
-            }
-        }
-    }*/
 }
 
 void Date::addDay(int n) {
