@@ -1,17 +1,23 @@
 #include "StringNumConverter.h"
 #include <iostream>
+#include <regex>
 
+using namespace std;
 
 void StringNumConverter::fixFormat() {
+
+    // удалить всё кроме минуса, цифр и точки
+    this->value = regex_replace(this->value, regex("[^-\\^0-9\\^.]"), "");
+
     // убрать нули в начале и в конце, если есть точка
-    if (this->value.find('.') >= 0) { // значит число флоатовое
-        while (this->value[this->value.length() - 1] == '0') {
-            this->value.erase(this->value.length() - 1);
+    if (this->value.find('.') != string::npos) { // значит число флоатовое
+        while (this->value.at(this->value.length() - 1) == '0') {
+            this->value.erase(this->value.length() - 1, 1);
         }
     }
 
     int i = this->value[0] == '-' ? 1 : 0;
-    while (this->value[i] == '0' && this->value[i + 1] == '0') {
+    while (this->value.length() >= 1 && this->value[i] == '0' && this->value[i + 1] == '0') {
         this->value.erase(i, 1);
     }
 }
@@ -109,8 +115,12 @@ bool StringNumConverter::operator<(const StringNumConverter &other) const {
     if (this->value[0] != '-' && other.value[0] == '-') return false;
 
     // проверка на длину целой части, здесь знак одинаковый, результат зависит от знака
-    if (this->value.find('.') < other.value.find('.')) return other.value[0] != '-';
-    if (this->value.find('.') > other.value.find('.')) return other.value[0] == '-';
+    if ((this->value.find('.') == string::npos ? this->value.length() : this->value.find('.')) <
+        (other.value.find('.') == string::npos ? other.value.length() : other.value.find('.')))
+        return other.value[0] != '-';
+    if ((this->value.find('.') == string::npos ? this->value.length() : this->value.find('.')) >
+        (other.value.find('.') == string::npos ? other.value.length() : other.value.find('.')))
+        return other.value[0] == '-';
 
     //
     int i = other.value[0] == '-' ? 1 : 0, tv, ov;
@@ -131,7 +141,7 @@ bool StringNumConverter::operator<(const StringNumConverter &other) const {
 
     // проверка на значение после точки, длина не имеет значения, расстояние от начала до точки одинаковое
     i = this->value.find('.'), tv = 0, ov = 0;
-    if (i >= 0) {
+    if (i != string::npos) {
         while (tv == ov && i < other.value.length() && i < this->value.length()) { // двигаемся вперёд
             i++; // если закончилась строка - заершаем
             if (i >= other.value.length() || i >= this->value.length()) {
