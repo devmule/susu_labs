@@ -13,15 +13,17 @@ export class SJF extends ProcessScheduler {
 		while (time > 0 && this.jobs.length) {
 			
 			// берётся самый которкий по времени или единственный, если всего один
-			job = this.jobs.reduce((selected, curr) => !selected ? curr : // берётся единственный, если всего один, или
-				selected.time > curr.time ? curr : selected); // самый которкий по времени
+			for (let i = 0; i < this.jobs.length; i++) { // берётся единственный, если всего один, или
+				if (!job || this.jobs[i].time < job.time) job = this.jobs[i]; // самый которкий по времени
+			}
 			
 			dt = Math.min(job.time, time);
 			job.time -= dt;
 			time -= dt;
 			
 			if (job.time <= 0) { // работа закончилась
-				this.jobs.shift();
+				let i = this.jobs.indexOf(job);
+				this.jobs.splice(i, 1);
 			}
 		}
 		return time;

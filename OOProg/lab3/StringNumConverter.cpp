@@ -179,6 +179,7 @@ StringNumConverter::operator int() const {
 }
 
 StringNumConverter::operator short() const {
+    // todo сделать проверку
     return std::stoi(this->value);
 }
 

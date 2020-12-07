@@ -1,4 +1,4 @@
-body, html, #screen, #process{
+body, html, #screen, #process {
     margin: 0;
     padding: 0;
     width: 100%;
@@ -19,5 +19,11 @@ body, html, #screen, #process{
 }
 
 .process-item {
-
+    border: black;
+    margin: 15px;
+    width: 300px;
+    padding-left: 15px;
+    padding-right: 15px;
+    line-height: 25px;
+    height: 25px;
 }
