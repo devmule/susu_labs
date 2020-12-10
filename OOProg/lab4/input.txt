@@ -1,0 +1,6 @@
+Employee Alexander Usoltsev A 2018 5 29 1
+Manager Margarita Chizhova K 2019 10 25 1 5
+Secretary Georgii Katayev M 2020 6 15 1
+Director Maxim Batyatin A 2016 2 12 1 80
+Consultant Ivan Ivanocich 2017 4 21 2013 5 28
+Tsec Michail Zusman P 5 2019 8 12 2019 10 15
