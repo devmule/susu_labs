@@ -1,13 +1,16 @@
 import {ProcessScheduler, Process} from './ProcessScheduler.js';
 import {SJF} from './SJF.js';
 import {FCFS} from './FCFS.js';
+import {SJFExt} from "./SJFExt.js";
 
 export class Application {
 	constructor() {
 		let select = document.getElementById('select-process');
-		let processes = [SJF, FCFS];
+		
+		let processes = [SJF, SJFExt, FCFS];
 		this.processes = new Map();
 		this.currentProcess /*ProcessScheduler*/ = null;
+		this.jobs = [];
 		
 		this.DOMProcessesCache = [];
 		this.DOMProcessesScreen = document.getElementById('screen');
@@ -52,30 +55,33 @@ export class Application {
 	}
 	
 	updateVisual() {
-		for (let i = 0; i < this.currentProcess.jobs.length; i++) {
-			let job = this.currentProcess.jobs[i];
+		for (let i = 0; i < this.jobs.length; i++) {
+			let job = this.jobs[i];
 			let elem = this.DOMProcessesCache[i];
 			if (!elem) elem = this.DOMProcessesCache[i] = this.createDOMProcessElem();
 			this.DOMProcessesScreen.appendChild(elem);
 			
 			let text = '';
 			for (const [key, value] of Object.entries(job)) text += `${key}: ${value}   `;
-			elem.innerHTML = text;
+			elem.innerHTML = `${i + 1}) ${text}`;
 		}
-		for (let i = this.currentProcess.jobs.length; i < this.DOMProcessesCache.length; i++) {
+		for (let i = this.jobs.length; i < this.DOMProcessesCache.length; i++) {
 			let elem = this.DOMProcessesCache[i];
 			if (elem.parentNode) elem.parentNode.removeChild(elem);
 		}
 	}
 	
 	tick() {
-		this.currentProcess.process(Number(this.speed.value));
+		let time = Number(this.speed.value);
+		while (time > 0 && this.jobs.length) {
+			time = this.currentProcess.process(time, this.jobs);
+		}
 		this.updateVisual();
 	}
 	
 	addProcess(time) {
 		if (time <= 0) return;
-		this.currentProcess.jobs.push(new Process(time));
+		this.jobs.push(new Process(time));
 		this.updateVisual();
 	}
 }

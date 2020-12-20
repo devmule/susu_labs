@@ -6,30 +6,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div id="screen">
+<div class="max-width">
+    <div id="screen">
 
-</div>
-<div id="process">
-    <label for="select-process">выберите способ решения процессов</label>
-    <select name="process" id="select-process"></select>
+    </div>
+    <div id="process">
+        <label for="select-process">выберите способ решения процессов</label>
+        <select name="process" id="select-process"></select>
 
-    <br><br><br>
-    <label for="process-speed">выберите скорость решения процессов</label>
-    <input id="process-speed" type="number" placeholder="скорость выполнения" value="5">
+        <br><br><br>
+        <label for="process-speed">выберите скорость решения процессов</label>
+        <input id="process-speed" type="number" placeholder="скорость выполнения" value="5">
 
-    <br><br><br>
-    <label for="add-process-num">добавьте процесс</label>
-    <input id="add-process-num" type="number" placeholder="время процесса">
-    <button id="add-process-btn">добавить процесс</button>
+        <br><br><br>
+        <label for="add-process-num">добавьте процесс</label>
+        <input id="add-process-num" type="number" placeholder="время процесса">
+        <button id="add-process-btn">добавить процесс</button>
 
-    <br><br><br>
-    <button id="pause-play-btn">пауза</button>
+        <br><br><br>
+        <button id="pause-play-btn">пауза</button>
+    </div>
 </div>
 
 <script type="module">
-    import {Application} from "./Application.js";
+	import {Application} from "./Application.js";
 
-    let app = new Application();
+	let app = new Application();
 </script>
 </body>
 </html>

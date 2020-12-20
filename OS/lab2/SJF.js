@@ -6,24 +6,27 @@ export class SJF extends ProcessScheduler {
 	 * невытесняющий, то есть процесс обрабатывается пока не завершится
 	 * по завершении обработки предыдущего процесса, берётся самый короткий процесс
 	 * @param {number} time - время, отведённое на решение процессов
+	 * @param {Array<Process>} jobs - список процессов, необходимых для обработки
 	 * @return {number} оставшееся время после завершения процесса
 	 **/
-	process(time = 0) {
-		let /*Process*/ job, dt;
-		while (time > 0 && this.jobs.length) {
+	process(time = 0, jobs) {
+		let dt;
+		while (time > 0 && jobs.length) {
 			
-			// берётся самый которкий по времени или единственный, если всего один
-			for (let i = 0; i < this.jobs.length; i++) { // берётся единственный, если всего один, или
-				if (!job || this.jobs[i].time < job.time) job = this.jobs[i]; // самый которкий по времени
+			// если процесс не завершен, продолжаем его обрабатывать
+			if (!this.job || !jobs.includes(this.job)) { // иначе выбираем самый короткий процесс
+				for (let i = 0; i < jobs.length; i++) { // берётся единственный, если всего один, или
+					if (!this.job || jobs[i].time < this.job.time) this.job = this.job = jobs[i]; // самый которкий по времени
+				}
 			}
 			
-			dt = Math.min(job.time, time);
-			job.time -= dt;
+			dt = Math.min(this.job.time, time);
+			this.job.time -= dt;
 			time -= dt;
 			
-			if (job.time <= 0) { // работа закончилась
-				let i = this.jobs.indexOf(job);
-				this.jobs.splice(i, 1);
+			if (this.job.time <= 0) { // работа закончилась
+				jobs.splice(jobs.indexOf(this.job), 1);
+				this.job = null;
 			}
 		}
 		return time;

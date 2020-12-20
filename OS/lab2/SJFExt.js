@@ -1,10 +1,10 @@
 import {ProcessScheduler} from './ProcessScheduler.js';
 
-export class FCFS extends ProcessScheduler {
+export class SJFExt extends ProcessScheduler {
 	/**
-	 * решение процессов по типу FIFO,
-	 * невытесняющий, то есть процесс обрабатывается пока не завершится
-	 * берёт первый в очереди процесс и обрабатывает его, пока не закончился процесс
+	 * решение процессов по типу Shortest Job First,
+	 * вытеснющий, то есть процесс выбирается при добавлении нового
+	 * или завершении старого процесса (в целом, обрабатывается всегда самый короткий процесс)
 	 * @param {number} time - время, отведённое на решение процессов
 	 * @param {Array<Process>} jobs - список процессов, необходимых для обработки
 	 * @return {number} оставшееся время после завершения процесса
@@ -13,9 +13,8 @@ export class FCFS extends ProcessScheduler {
 		let dt;
 		while (time > 0 && jobs.length) {
 			
-			// если процесс не завершен, продолжаем его обрабатывать
-			if (!this.job || !jobs.includes(this.job)) {
-				this.job = jobs[0]; // в другом случае берётся первый в списке
+			for (let i = 0; i < jobs.length; i++) { // берётся единственный, если всего один, или
+				if (!this.job || jobs[i].time < this.job.time) this.job = jobs[i]; // самый которкий по времени
 			}
 			
 			dt = Math.min(this.job.time, time);
@@ -24,7 +23,7 @@ export class FCFS extends ProcessScheduler {
 			
 			if (this.job.time <= 0) { // работа закончилась
 				jobs.splice(jobs.indexOf(this.job), 1);
-				this.job = null
+				this.job = null;
 			}
 		}
 		return time;
