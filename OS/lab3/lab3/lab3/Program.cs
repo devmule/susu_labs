@@ -21,19 +21,19 @@ namespace lab3
         public void Producer()
         {
             int number = ProducersTimeList.Count;
-            int speed = ProducersTimeList[number - 1];
-            Console.WriteLine("Producer_{0} speed: [{1}].", number, speed);
+            int time = ProducersTimeList[number - 1];
+            Console.WriteLine("Producer_{0} time={1}", number, time);
 
             while (true)
             {
-                Thread.Sleep(Convert.ToInt32(speed * 1000 * (rand.NextDouble() + 0.5)));//имитация выполнения
+                Thread.Sleep(Convert.ToInt32(time * 1000 * (rand.NextDouble() + 0.5)));//имитация выполнения
                 if (q.queue.Count < 10)
                 {
                     lock (mutex)
                     {
                         NumberProces++;
                         q.Enqueue("data_" + NumberProces.ToString());
-                        Console.WriteLine("[{0}/10] Produser_{1} add data_{2}.", q.queue.Count, number, NumberProces);
+                        Console.WriteLine("[{0}/10] Produser_{1} add data_{2}", q.queue.Count, number, NumberProces);
                     }
 
                 }
@@ -43,15 +43,15 @@ namespace lab3
         public void Consumer()
         {
             int number = ConsumersTimeList.Count;
-            int speed = ConsumersTimeList[number - 1];
-            Console.WriteLine("Consumer_{0} speed: [{1}].", number, speed);
+            int time = ConsumersTimeList[number - 1];
+            Console.WriteLine("Consumer_{0} time={1}", number, time);
             while (true)
             {
                 string s = q.Dequeue();
                 if (s == null) continue;
 
-                Console.WriteLine("[{0}/10] Consumer_{1} pop {2}.", q.queue.Count, number, s);
-                Thread.Sleep(Convert.ToInt32(speed * 1000 * (rand.NextDouble() + 0.5)));
+                Console.WriteLine("[{0}/10] Consumer_{1} pop {2}", q.queue.Count, number, s);
+                Thread.Sleep(Convert.ToInt32(time * 1000 * (rand.NextDouble() + 0.5)));
             }
         }
 
@@ -62,7 +62,7 @@ namespace lab3
         object mutexEnqueue = new object();
         object mutexDequeue = new object();
         public Queue<T> queue = new Queue<T>();
-        public T[] Q = new T[11];
+        public T[] Q = new T[10];
 
         public void Enqueue(T task) 
         {
@@ -86,33 +86,34 @@ namespace lab3
 
         static void Main(string[] args)
         {
+            prodcons.ProducersTimeList.Add(1);
+            prodcons.producers.Add(new Thread(prodcons.Producer));
+            prodcons.producers[prodcons.producers.Count - 1].Start();
+            Thread.Sleep(50);
             prodcons.ProducersTimeList.Add(2);
             prodcons.producers.Add(new Thread(prodcons.Producer));
             prodcons.producers[prodcons.producers.Count - 1].Start();
-            Thread.Sleep(100);
-            prodcons.ProducersTimeList.Add(4);
+            Thread.Sleep(50);
+            prodcons.ProducersTimeList.Add(3);
             prodcons.producers.Add(new Thread(prodcons.Producer));
             prodcons.producers[prodcons.producers.Count - 1].Start();
-            Thread.Sleep(100);
-            prodcons.ProducersTimeList.Add(6);
-            prodcons.producers.Add(new Thread(prodcons.Producer));
-            prodcons.producers[prodcons.producers.Count - 1].Start();
-            Thread.Sleep(100);
+            Thread.Sleep(50);
+            Console.WriteLine("");
 
             prodcons.ConsumersTimeList.Add(4);
             prodcons.consumers.Add(new Thread(prodcons.Consumer));
             prodcons.consumers[prodcons.consumers.Count - 1].Start();
-            Thread.Sleep(100);
-            prodcons.ConsumersTimeList.Add(8);
+            Thread.Sleep(50);
+            prodcons.ConsumersTimeList.Add(5);
             prodcons.consumers.Add(new Thread(prodcons.Consumer));
             prodcons.consumers[prodcons.consumers.Count - 1].Start();
-            Thread.Sleep(100);
-            prodcons.ConsumersTimeList.Add(12);
+            Thread.Sleep(50);
+            prodcons.ConsumersTimeList.Add(6);
             prodcons.consumers.Add(new Thread(prodcons.Consumer));
             prodcons.consumers[prodcons.consumers.Count - 1].Start();
+            Thread.Sleep(50);
+            Console.WriteLine("");
 
-            Thread.Sleep(100);
-            Console.WriteLine("\n\n");
         }
     }
 }
