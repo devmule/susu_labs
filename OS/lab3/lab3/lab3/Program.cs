@@ -16,7 +16,7 @@ namespace lab3
         public List<Thread> consumers = new List<Thread>();
         public List<Thread> producers = new List<Thread>();
         public Buffer<string> q = new Buffer<string>();
-        public int NumberProces = 0;//счетчик
+        public int NumberProces = 0; //счетчик
 
         public void Producer()
         {
@@ -26,16 +26,15 @@ namespace lab3
 
             while (true)
             {
-                Thread.Sleep(Convert.ToInt32(time * 1000 * (rand.NextDouble() + 0.5)));//имитация выполнения
-                if (q.queue.Count < 10)
+                Thread.Sleep(Convert.ToInt32(time * 1000 * (rand.NextDouble() + 0.5))); //имитация выполнения
+                lock (mutex)
                 {
-                    lock (mutex)
+                    if (q.queue.Count < 10)
                     {
                         NumberProces++;
                         q.Enqueue("data_" + NumberProces.ToString());
                         Console.WriteLine("[{0}/10] Produser_{1} add data_{2}", q.queue.Count, number, NumberProces);
                     }
-
                 }
             }
         }
