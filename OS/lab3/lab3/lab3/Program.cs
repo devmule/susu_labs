@@ -10,30 +10,27 @@ namespace lab3
     class Lab3
     {
         object mutex = new object();
-        Random rand = new Random();
-        public List<int> ConsumersTimeList = new List<int>();
-        public List<int> ProducersTimeList = new List<int>();
-        public List<Thread> consumers = new List<Thread>();
-        public List<Thread> producers = new List<Thread>();
-        public Buffer<string> q = new Buffer<string>();
+        public Random rand = new Random();
+        public Buffer<string> buffer = new Buffer<string>();
         public int NumberProces = 0; //счетчик
+        public int numProds = 0;
+        public int numCons = 0;
 
         public void Producer()
         {
-            int number = ProducersTimeList.Count;
-            int time = ProducersTimeList[number - 1];
-            Console.WriteLine("Producer_{0} time={1}", number, time);
+            int number = ++numProds;
+            Console.WriteLine("Producer_{0}", number);
 
             while (true)
             {
-                Thread.Sleep(Convert.ToInt32(time * 1000 * (rand.NextDouble() + 0.5))); //имитация выполнения
+                Thread.Sleep(Convert.ToInt32(rand.NextDouble() * 2000)); //имитация выполнения
                 lock (mutex)
                 {
-                    if (q.queue.Count < 10)
+                    if (buffer.queue.Count < 10)
                     {
                         NumberProces++;
-                        q.Enqueue("data_" + NumberProces.ToString());
-                        Console.WriteLine("[{0}/10] Produser_{1} add data_{2}", q.queue.Count, number, NumberProces);
+                        buffer.Enqueue("data_" + NumberProces.ToString());
+                        Console.WriteLine(string.Concat(Enumerable.Repeat("1", buffer.queue.Count)) + string.Concat(Enumerable.Repeat("_", 10 - buffer.queue.Count)));
                     }
                 }
             }
@@ -41,16 +38,16 @@ namespace lab3
 
         public void Consumer()
         {
-            int number = ConsumersTimeList.Count;
-            int time = ConsumersTimeList[number - 1];
-            Console.WriteLine("Consumer_{0} time={1}", number, time);
+            int number = ++numCons;
+            Console.WriteLine("Consumer_{0}", number);
             while (true)
             {
-                string s = q.Dequeue();
+                string s = buffer.Dequeue();
                 if (s == null) continue;
 
-                Console.WriteLine("[{0}/10] Consumer_{1} pop {2}", q.queue.Count, number, s);
-                Thread.Sleep(Convert.ToInt32(time * 1000 * (rand.NextDouble() + 0.5)));
+
+                Console.WriteLine(string.Concat(Enumerable.Repeat("1", buffer.queue.Count)) + string.Concat(Enumerable.Repeat("_", 10 - buffer.queue.Count)));
+                Thread.Sleep(Convert.ToInt32(rand.NextDouble() * 3000));
             }
         }
 
@@ -85,33 +82,22 @@ namespace lab3
 
         static void Main(string[] args)
         {
-            prodcons.ProducersTimeList.Add(1);
-            prodcons.producers.Add(new Thread(prodcons.Producer));
-            prodcons.producers[prodcons.producers.Count - 1].Start();
+            (new Thread(prodcons.Producer)).Start();
             Thread.Sleep(50);
-            prodcons.ProducersTimeList.Add(2);
-            prodcons.producers.Add(new Thread(prodcons.Producer));
-            prodcons.producers[prodcons.producers.Count - 1].Start();
+            (new Thread(prodcons.Producer)).Start();
             Thread.Sleep(50);
-            prodcons.ProducersTimeList.Add(3);
-            prodcons.producers.Add(new Thread(prodcons.Producer));
-            prodcons.producers[prodcons.producers.Count - 1].Start();
+            (new Thread(prodcons.Producer)).Start();
             Thread.Sleep(50);
-            Console.WriteLine("");
+            Console.WriteLine("\n");
 
-            prodcons.ConsumersTimeList.Add(4);
-            prodcons.consumers.Add(new Thread(prodcons.Consumer));
-            prodcons.consumers[prodcons.consumers.Count - 1].Start();
+            (new Thread(prodcons.Consumer)).Start();
             Thread.Sleep(50);
-            prodcons.ConsumersTimeList.Add(5);
-            prodcons.consumers.Add(new Thread(prodcons.Consumer));
-            prodcons.consumers[prodcons.consumers.Count - 1].Start();
+            (new Thread(prodcons.Consumer)).Start();
             Thread.Sleep(50);
-            prodcons.ConsumersTimeList.Add(6);
-            prodcons.consumers.Add(new Thread(prodcons.Consumer));
-            prodcons.consumers[prodcons.consumers.Count - 1].Start();
+            (new Thread(prodcons.Consumer)).Start();
+
             Thread.Sleep(50);
-            Console.WriteLine("");
+            Console.WriteLine("\n\n");
 
         }
     }
