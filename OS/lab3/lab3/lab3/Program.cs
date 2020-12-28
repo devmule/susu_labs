@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace lab3
 {
@@ -40,14 +38,13 @@ namespace lab3
         {
             int number = ++numCons;
             Console.WriteLine("Consumer_{0}", number);
+
             while (true)
             {
+                Thread.Sleep(Convert.ToInt32(rand.NextDouble() * 3000));
                 string s = buffer.Dequeue();
                 if (s == null) continue;
-
-
                 Console.WriteLine(string.Concat(Enumerable.Repeat("1", buffer.queue.Count)) + string.Concat(Enumerable.Repeat("_", 10 - buffer.queue.Count)));
-                Thread.Sleep(Convert.ToInt32(rand.NextDouble() * 3000));
             }
         }
 
@@ -83,21 +80,12 @@ namespace lab3
         static void Main(string[] args)
         {
             (new Thread(prodcons.Producer)).Start();
-            Thread.Sleep(50);
             (new Thread(prodcons.Producer)).Start();
-            Thread.Sleep(50);
             (new Thread(prodcons.Producer)).Start();
-            Thread.Sleep(50);
-            Console.WriteLine("\n");
 
             (new Thread(prodcons.Consumer)).Start();
-            Thread.Sleep(50);
             (new Thread(prodcons.Consumer)).Start();
-            Thread.Sleep(50);
             (new Thread(prodcons.Consumer)).Start();
-
-            Thread.Sleep(50);
-            Console.WriteLine("\n\n");
 
         }
     }
