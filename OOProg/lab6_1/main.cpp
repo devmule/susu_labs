@@ -1,49 +1,51 @@
 #include <iostream>
+#include <string>
 #include <stdexcept>
-#include <list>
+#include <vector>
+#include <algorithm>
+using namespace::std;
 
-using namespace std;
+typedef long long ll;
 
-class StackMin {
-private:
-    list<long long> vec;
+class EmptyStack : public runtime_error
+{
+public:
+    EmptyStack(const string & message =""):runtime_error(message) {}
+};
 
-    static bool comp(const long long *lhs, const long long *rhs) {
-        return lhs < rhs;
-    }
+
+class StackMin
+{
+    vector < pair <ll, ll> > data;
 
 public:
-    void push(long long s) {
-        vec.push_front(s);
+    StackMin():data{}
+    {}
+
+    void push(ll v)
+    {
+        if (data.size()) data.push_back({ v, min(v, data.rbegin()->second) });
+        else data.push_back({ v,v });
     }
 
-    long long top() {
-        if (vec.empty()) {
-            throw exception(logic_error("Empty on top()"));
-        } else {
-            return vec.front();
-        }
+    ll top() {
+        if (data.size()) return data.rbegin()->first;
+        else throw EmptyStack("Empty on top()");
     }
 
-    long long pop() {
-        if (vec.empty()) {
-            throw exception(logic_error("Empty on pop()"));
-        } else {
-            long long top = vec.front();
-            vec.pop_front();
-            return top;
-        }
+    ll pop() {
+        if (data.size()) {
+            ll a = data.rbegin()->first;
+            data.pop_back();
+            return a;
+        } else throw EmptyStack("Empty on pop()");
     }
 
-    long long getmin() {
-        if (vec.empty()) {
-            throw exception(logic_error("Empty on getmin()"));
-        } else {
-            long long min = vec.front();
-            for (long long val : vec) if (val < min) min = val;
-            return min;
-        }
+    ll getmin() {
+        if (data.size())  return data.rbegin()->second;
+        else throw EmptyStack("Empty on getmin()");
     }
+
 };
 
 

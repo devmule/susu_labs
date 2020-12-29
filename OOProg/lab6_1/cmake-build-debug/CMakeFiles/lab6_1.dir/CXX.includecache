@@ -9,8 +9,12 @@
 C:/Users/79227/Desktop/susu_labs/OOProg/lab6_1/main.cpp
 iostream
 -
+string
+-
 stdexcept
 -
-list
+vector
+-
+algorithm
 -
 
