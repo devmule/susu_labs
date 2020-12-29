@@ -1,5 +1,5 @@
 #include <iostream>
-#include <algorithm>
+#include <stdexcept>
 #include <list>
 
 using namespace std;
@@ -19,7 +19,7 @@ public:
 
     long long top() {
         if (vec.empty()) {
-            throw exception("Empty on top()");
+            throw exception(logic_error("Empty on top()"));
         } else {
             return vec.front();
         }
@@ -27,7 +27,7 @@ public:
 
     long long pop() {
         if (vec.empty()) {
-            throw exception("Empty on pop()");
+            throw exception(logic_error("Empty on pop()"));
         } else {
             long long top = vec.front();
             vec.pop_front();
@@ -37,7 +37,7 @@ public:
 
     long long getmin() {
         if (vec.empty()) {
-            throw exception("Empty on getmin()");
+            throw exception(logic_error("Empty on getmin()"));
         } else {
             long long min = vec.front();
             for (long long val : vec) if (val < min) min = val;
