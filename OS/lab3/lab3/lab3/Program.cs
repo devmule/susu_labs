@@ -27,8 +27,12 @@ namespace lab3
                     if (buffer.queue.Count < 10)
                     {
                         NumberProces++;
-                        buffer.Enqueue("data_" + NumberProces.ToString());
-                        Console.WriteLine(string.Concat(Enumerable.Repeat("1", buffer.queue.Count)) + string.Concat(Enumerable.Repeat("_", 10 - buffer.queue.Count)));
+                        buffer.Enqueue(number.ToString());
+                        foreach (string st in buffer.queue)
+                        {
+                            Console.Write(st);
+                        }
+                        Console.Write("\n");
                     }
                 }
             }
@@ -44,7 +48,12 @@ namespace lab3
                 Thread.Sleep(Convert.ToInt32(rand.NextDouble() * 3000));
                 string s = buffer.Dequeue();
                 if (s == null) continue;
-                Console.WriteLine(string.Concat(Enumerable.Repeat("1", buffer.queue.Count)) + string.Concat(Enumerable.Repeat("_", 10 - buffer.queue.Count)));
+
+                foreach (string st in buffer.queue)
+                {
+                    Console.Write(st);
+                }
+                Console.Write("\n");
             }
         }
 
