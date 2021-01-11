@@ -1,0 +1,3 @@
+C:/Users/79227/Desktop/susu_labs/OOProg/exam_1/cmake-build-debug/CMakeFiles/exam_1.dir
+C:/Users/79227/Desktop/susu_labs/OOProg/exam_1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/79227/Desktop/susu_labs/OOProg/exam_1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
