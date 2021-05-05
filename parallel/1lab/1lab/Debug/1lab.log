@@ -1,0 +1,32 @@
+﻿  1lab.cpp
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(6,51): error C3083: this_thread: символ слева от "::" должен представлять тип
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(6,64): error C2039: "get_id": не является членом "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\chrono(24): message : см. объявление "std"
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(6,70): error C3861: get_id: идентификатор не найден
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(7,10): error C3083: this_thread: символ слева от "::" должен представлять тип
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(7,23): error C2039: "sleep_for": не является членом "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\chrono(24): message : см. объявление "std"
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(7,32): error C3861: sleep_for: идентификатор не найден
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(14,50): error C3083: this_thread: символ слева от "::" должен представлять тип
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(14,63): error C2039: "get_id": не является членом "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\chrono(24): message : см. объявление "std"
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(14,69): error C3861: get_id: идентификатор не найден
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(17,10): error C3083: this_thread: символ слева от "::" должен представлять тип
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(17,23): error C2039: "sleep_for": не является членом "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\chrono(24): message : см. объявление "std"
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(17,32): error C3861: sleep_for: идентификатор не найден
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(23,10): error C2039: "thread": не является членом "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\chrono(24): message : см. объявление "std"
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(23,17): error C2065: thread: необъявленный идентификатор
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(23,17): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "t_write"
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(23,17): error C3861: t_write: идентификатор не найден
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(24,10): error C3083: this_thread: символ слева от "::" должен представлять тип
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(24,23): error C2039: "sleep_for": не является членом "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\chrono(24): message : см. объявление "std"
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(24,32): error C3861: sleep_for: идентификатор не найден
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(25,10): error C2039: "thread": не является членом "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\chrono(24): message : см. объявление "std"
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(25,17): error C2065: thread: необъявленный идентификатор
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(25,17): error C2146: синтаксическая ошибка: отсутствие ";" перед идентификатором "t_read"
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(25,17): error C3861: t_read: идентификатор не найден
+C:\Users\79227\Desktop\susu_labs\parallel\1lab\1lab\1lab.cpp(26,5): error C2065: t_write: необъявленный идентификатор

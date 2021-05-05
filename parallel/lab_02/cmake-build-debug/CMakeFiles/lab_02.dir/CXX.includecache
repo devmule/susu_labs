@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/79227/Desktop/susu_labs/parallel/lab_02/main.cpp
+iostream
+-
+thread
+-
+string
+-
+chrono
+-
+mutex
+-
+queue
+-
+ctime
+-
+

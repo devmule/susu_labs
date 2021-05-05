@@ -1,0 +1,5 @@
+﻿  2lab.cpp
+C:\Users\79227\Desktop\susu_labs\parallel\2lab\2lab\2lab.cpp(1,4): error C2014: команда препроцессора не должна начинаться с пробела
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\sal.h(2361,1): error C2144: синтаксическая ошибка: перед "int" требуется ";"
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.27.29110\include\sal.h(2361,8): error C4430: отсутствует спецификатор типа - предполагается int. Примечание. C++ не поддерживает int по умолчанию
+C:\Users\79227\Desktop\susu_labs\parallel\2lab\2lab\2lab.cpp(21,10): warning C4244: =: преобразование "int" в "float", возможна потеря данных
