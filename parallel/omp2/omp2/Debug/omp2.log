@@ -1,0 +1,3 @@
+﻿  omp2.cpp
+C:\Users\79227\Desktop\susu_labs\parallel\omp2\omp2\omp2.cpp(5,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+  omp2.vcxproj -> C:\Users\79227\Desktop\susu_labs\parallel\omp2\omp2\Debug\omp2.exe

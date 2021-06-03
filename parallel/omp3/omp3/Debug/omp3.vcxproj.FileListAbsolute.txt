@@ -1,0 +1,2 @@
+C:\Users\79227\Desktop\susu_labs\parallel\omp3\omp3\Debug\omp3.exe
+C:\Users\79227\Desktop\susu_labs\parallel\omp3\omp3\Debug\omp3.pdb

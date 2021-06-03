@@ -9,16 +9,12 @@
 C:/Users/79227/Desktop/susu_labs/parallel/lab_02/main.cpp
 iostream
 -
-thread
--
-string
--
-chrono
--
 mutex
+-
+thread
 -
 queue
 -
-ctime
+condition_variable
 -
 

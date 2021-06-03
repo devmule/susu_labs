@@ -1,0 +1,2 @@
+C:\Users\79227\Desktop\susu_labs\parallel\omp2\omp2\Debug\omp2.exe
+C:\Users\79227\Desktop\susu_labs\parallel\omp2\omp2\Debug\omp2.pdb
