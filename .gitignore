@@ -2,4 +2,5 @@
 /pzis_labs/venv/
 /CHMvIR_kursach/cmake-build-debug/
 .idea
+.vs
 *__pycache__
