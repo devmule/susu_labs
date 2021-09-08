@@ -1,0 +1,16 @@
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\bin\Debug\net5.0\UDPClient.exe
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\bin\Debug\net5.0\UDPClient.deps.json
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\bin\Debug\net5.0\UDPClient.runtimeconfig.json
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\bin\Debug\net5.0\UDPClient.runtimeconfig.dev.json
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\bin\Debug\net5.0\UDPClient.dll
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\bin\Debug\net5.0\ref\UDPClient.dll
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\bin\Debug\net5.0\UDPClient.pdb
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\obj\Debug\net5.0\UDPClient.csproj.AssemblyReference.cache
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\obj\Debug\net5.0\UDPClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\obj\Debug\net5.0\UDPClient.AssemblyInfoInputs.cache
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\obj\Debug\net5.0\UDPClient.AssemblyInfo.cs
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\obj\Debug\net5.0\UDPClient.csproj.CoreCompileInputs.cache
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\obj\Debug\net5.0\UDPClient.dll
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\obj\Debug\net5.0\ref\UDPClient.dll
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\obj\Debug\net5.0\UDPClient.pdb
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\UDPClient\obj\Debug\net5.0\UDPClient.genruntimeconfig.cache

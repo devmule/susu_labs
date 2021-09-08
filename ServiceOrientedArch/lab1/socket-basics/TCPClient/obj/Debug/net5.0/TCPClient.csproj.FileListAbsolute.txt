@@ -1,0 +1,15 @@
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\bin\Debug\net5.0\TCPClient.exe
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\bin\Debug\net5.0\TCPClient.deps.json
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\bin\Debug\net5.0\TCPClient.runtimeconfig.json
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\bin\Debug\net5.0\TCPClient.runtimeconfig.dev.json
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\bin\Debug\net5.0\TCPClient.dll
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\bin\Debug\net5.0\ref\TCPClient.dll
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\bin\Debug\net5.0\TCPClient.pdb
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.AssemblyInfoInputs.cache
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.AssemblyInfo.cs
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.csproj.CoreCompileInputs.cache
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.dll
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\ref\TCPClient.dll
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.pdb
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.genruntimeconfig.cache
