@@ -9,8 +9,8 @@ wss.on('connection', (user) => {
 	user.onmessage = (msg) => {
 		try {
 			
-			let given_list = msg.data.replace('\n', '').split(',').map(w => w.trim());
-			let unique_list = given_list.filter((value, index, arr) => arr.indexOf(value) === index);
+			let given_list = msg.data.split('\n').map(w => w.trim());
+			let unique_list = given_list.filter((value, index, arr) => arr.indexOf(value) === index && value.length > 0);
 			let sorted_list = unique_list.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()));
 			
 			user.send(sorted_list.join('\n'));
