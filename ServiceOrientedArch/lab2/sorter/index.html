@@ -3,30 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>sorter</title>
-    <script src="client.js"></script>
 </head>
 <body onload="main('ws://localhost:8000')">
 
-<label for="input">введите слова, разделение по запятой</label>
-<br>
+<label for="input">введите слова, разделение по запятой</label><br>
 <textarea name="input" id="input" cols="30" rows="10"
 >булка, яблоко, треска, Анатолий, 123, виктория, гнездо, дятел, оптоволокно, гидроперикард, Дрезден
-</textarea>
-<br>
-<button id="send">отправить</button>
+</textarea><br><button id="send">отправить</button>
 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
+<br><br><br><br><br><br><br><br><br><br>
 
-<label for="output">результат от сервера</label>
-<br>
+<label for="output">результат от сервера</label><br>
 <textarea name="output" id="output" cols="30" rows="10" disabled="disabled"></textarea>
 
+<script>
+	function main(url) {
+
+		const socket = new WebSocket(url);
+
+		const send_btn = document.getElementById('send');
+		const input_area = document.getElementById('input');
+		const output_area = document.getElementById('output');
+
+		send_btn.onclick = () => socket.send(input_area.innerHTML);
+
+		socket.addEventListener('open', () => alert('соединение установлено'));
+		socket.addEventListener('close', () => alert('соединение потеряно'));
+		socket.addEventListener('error', () => alert('соединение потеряно'));
+		socket.addEventListener('message', e => output_area.innerHTML = e.data);
+
+	}
+</script>
 </body>
 </html>
