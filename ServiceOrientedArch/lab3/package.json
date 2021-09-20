@@ -1,4 +1,5 @@
 {
   "name": "lab3",
-  "author": "devmule"
+  "author": "devmule",
+  "type": "module"
 }
