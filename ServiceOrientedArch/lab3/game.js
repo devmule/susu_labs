@@ -1,7 +1,7 @@
 import CITIES from "./cities.js";
 import EventEmitter from "./EventEmitter.js";
 
-const TIME_TO_LEFT = 10 * 1000; // 1 минута на отгадывание слова
+const TIME_TO_LEFT = 60 * 1000; // 1 минута на отгадывание слова
 
 export class Player {
 	/** @param {string} name */
@@ -21,7 +21,7 @@ export class CitiesGame extends EventEmitter {
 		/** @type {Player[]} */
 		this.players = [];
 		this.curPlayerID = 0;
-		this.time = 0;
+		this.time = TIME_TO_LEFT;
 		
 		this.lastLetter = '';
 		/** @type {number[]} */
@@ -60,6 +60,7 @@ export class CitiesGame extends EventEmitter {
 	 * @param {string} city
 	 * */
 	tryGuessCity(city) {
+		if (!this.isPlaying) return;
 		
 		city = city.trim().toLowerCase();
 		let player = this.players[this.curPlayerID];
@@ -67,12 +68,16 @@ export class CitiesGame extends EventEmitter {
 		let cityIndex = this.getCityIndex(city);
 		if (cityIndex < 0) {
 			
-			this.dispatchEvent({type: 'message', message: `город \"${city}\" не подходит, не существует или уже отгадан`});
+			this.dispatchEvent({
+				type: 'message',
+				message: `город \"${city}\" не подходит, не существует или уже отгадан`
+			});
 			
 		} else {
 			this.guessedIndices.push(cityIndex);
-			this.lastLetter = city[city.length - 1];
-			this.time = 0;
+			this.lastLetter = city[city.length - 1].toLowerCase();
+			if (["ь", "ъ", "ы"].indexOf(this.lastLetter) >= 0) this.lastLetter = city[city.length - 2].toLowerCase();
+			this.time = TIME_TO_LEFT;
 			this.curPlayerID = (this.curPlayerID + 1) % this.players.length;
 			let current = this.players[this.curPlayerID];
 			
@@ -102,7 +107,7 @@ export class CitiesGame extends EventEmitter {
 		
 		this.players.splice(index, 1);
 		this.curPlayerID = this.curPlayerID % this.players.length;
-		this.time = 0;
+		this.time = TIME_TO_LEFT;
 		
 		this.dispatchEvent({type: 'message', message: `${player.name.trim()} вышел`});
 	}
@@ -110,8 +115,10 @@ export class CitiesGame extends EventEmitter {
 	play() {
 		if (this.players.length <= 1 || this.isPlaying) return false;
 		this.isPlaying = true;
+		this.curPlayerID = 0;
 		this.lastLetter = '';
-		this.dispatchEvent({type: 'message', message: "игра началась"});
+		let player = this.players[this.curPlayerID];
+		this.dispatchEvent({type: 'message', message: `Игра началась! ${player.name.trim()} называет любой город!`});
 		return true;
 	}
 	
@@ -122,14 +129,15 @@ export class CitiesGame extends EventEmitter {
 	tick(dt) {
 		if (!this.isPlaying) return;
 		
-		this.time += dt;
+		this.time -= dt;
+		// console.log(this.time / 1000);
 		
-		if (this.time > TIME_TO_LEFT) {
+		if (this.time < 0) {
 			let kicked = this.players[this.curPlayerID];
 			
 			this.players.splice(this.curPlayerID, 1);
 			this.curPlayerID = this.curPlayerID % this.players.length;
-			this.time = 0;
+			this.time = TIME_TO_LEFT;
 			
 			let player = this.players[this.curPlayerID];
 			

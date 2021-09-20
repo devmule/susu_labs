@@ -31,7 +31,7 @@ export class HotSeat extends GameScreen {
 <br>
 <br>
 
-<label for="city_input">введите город</label><br>
+<label for="city_input">введите город. </label><div style="display: inline-block" id="time_left">123</div><br>
 <textarea name="city_input" id="city_input" cols="30" rows="1"></textarea><br>
 <button id="city_send">отправить город</button>
 <br>
@@ -68,6 +68,8 @@ export class HotSeat extends GameScreen {
 			this.messages_log.innerHTML += `\n > ${event.message}`;
 		});
 		
+		this.time_left = this.screen.querySelector('#time_left');
+		
 		
 		this.lastTime = Date.now();
 		this.tickBind = this.tick.bind(this);
@@ -79,6 +81,7 @@ export class HotSeat extends GameScreen {
 		let dt = time - this.lastTime;
 		this.game.tick(dt);
 		this.lastTime = time;
+		this.time_left.innerHTML = `\t ${Math.floor(this.game.time / 1000)} сек. осталось.`
 		requestAnimationFrame(this.tickBind);
 	}
 }
