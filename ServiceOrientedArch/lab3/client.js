@@ -1,19 +1,8 @@
 import {CitiesGame, Player} from "./game.js";
 
-class GameScreen {
-	constructor() {
-		/**
-		 * @abstract
-		 * @type {HTMLElement}
-		 * */
-		this.screen = null;
-	}
-}
 
-
-export class HotSeat extends GameScreen {
+export class HotSeat {
 	constructor() {
-		super();
 		this.screen = document.createElement('div');
 		this.screen.innerHTML = `
 
@@ -83,5 +72,23 @@ export class HotSeat extends GameScreen {
 		this.lastTime = time;
 		this.time_left.innerHTML = `\t ${Math.floor(this.game.time / 1000)} сек. осталось.`
 		requestAnimationFrame(this.tickBind);
+	}
+}
+
+export class Online {
+	constructor(address, nickname) {
+		
+		this.screen = document.createElement('div');
+		
+		this.socket = new WebSocket(address);
+		this.socket.addEventListener('open', () => alert('соединение установлено'));
+		this.socket.addEventListener('close', () => alert('соединение потеряно'));
+		this.socket.addEventListener('error', () => alert('соединение потеряно'));
+		this.socket.addEventListener('message', this.onMessage.bind(this));
+		
+	}
+	
+	onMessage(e) {
+	
 	}
 }

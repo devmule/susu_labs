@@ -5,13 +5,40 @@
     <title>city</title>
 </head>
 <body>
-
+<div id="primary_screen">
+    <button id="offline">играть на одном компьютере</button>
+    <br><br><br><br>
+    или
+    <button id="online">подключиться</button>
+    к
+    <textarea name="online_input" id="online_input" cols="30" rows="1">ws://localhost:8000</textarea>
+    под именем
+    <textarea name="name_input" id="name_input" cols="30" rows="1"></textarea>
+</div>
 </body>
 <script type="module">
-    import {HotSeat} from "./client.js";
+	import {HotSeat, Online} from "./client.js";
 
-    let hs = new HotSeat();
-    document.body.appendChild(hs.screen);
+	document.getElementById('name_input').value = `Player#${Math.floor(Math.random() * 10000)}`;
+
+	let scr = document.getElementById('primary_screen');
+
+	let ofl_btn = document.getElementById('offline');
+	ofl_btn.onclick = () => {
+		scr.remove();
+		let hs = new HotSeat();
+		document.body.appendChild(hs.screen);
+	};
+
+	let onl_btn = document.getElementById('online');
+	onl_btn.onclick = () => {
+		let address = document.getElementById('online_input').value;
+		let nickname = document.getElementById('name_input').value;
+		scr.remove();
+		let onl = new Online(address, nickname);
+		document.body.appendChild(onl.screen);
+	};
+
 
 </script>
 </html>

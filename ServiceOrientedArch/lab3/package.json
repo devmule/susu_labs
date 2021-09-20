@@ -1,5 +1,8 @@
 {
   "name": "lab3",
   "author": "devmule",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "ws": "^8.2.2"
+  }
 }
