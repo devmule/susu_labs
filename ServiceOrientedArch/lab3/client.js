@@ -28,7 +28,7 @@ class HotSeat {
 
 		`;
 		
-		this.game = new CitiesGame();
+		this.game = new CitiesGame(CITIES);
 		
 		this.name_input = this.screen.querySelector('#name_input');
 		this.name_add = this.screen.querySelector('#name_btn');
@@ -88,11 +88,6 @@ class Online {
 <textarea name="messages_log" id="messages_log" cols="30" rows="10" disabled="disabled"></textarea>
 		`;
 		
-		this.city_input = this.screen.querySelector('#city_input');
-		this.city_send = this.screen.querySelector('#city_send');
-		this.time_left = this.screen.querySelector('#time_left');
-		this.messages_log = this.screen.querySelector('#messages_log');
-		
 		
 		this.socket = new WebSocket(address);
 		this.socket.addEventListener('open', () => {
@@ -102,6 +97,17 @@ class Online {
 		this.socket.addEventListener('close', () => alert('соединение потеряно'));
 		this.socket.addEventListener('error', () => alert('соединение потеряно'));
 		this.socket.addEventListener('message', this.onMessage.bind(this));
+		
+		this.city_input = this.screen.querySelector('#city_input');
+		this.city_send = this.screen.querySelector('#city_send');
+		this.city_send.addEventListener('click', () => {
+			let city = this.city_input.value.trim();
+			this.socket.send(JSON.stringify({type: 'city', city: city}))
+			this.city_input.value = '';
+		});
+		
+		this.time_left = this.screen.querySelector('#time_left');
+		this.messages_log = this.screen.querySelector('#messages_log');
 		
 	}
 	

@@ -1,3 +1,73 @@
+/**
+ * @typedef {Object} ICustomEvent
+ * @property {string} type
+ * */
+
+/**
+ * @typedef {function(event: ICustomEvent)} IEventHandler
+ * */
+
+/**
+ * @typedef {Object} IEventListener
+ * @property {string} type
+ * @property {IEventHandler} handler
+ * */
+
+
+class EventEmitter {
+	
+	constructor() {
+		/** @type IEventListener[] */
+		this.eventListeners = [];
+	}
+	
+	/**
+	 * @param {string} type
+	 * @param {IEventHandler} handler
+	 * */
+	addEventListener(type, handler) {
+		this.eventListeners.push({type, handler});
+	}
+	
+	/**
+	 * @param {string} type
+	 * @param {IEventHandler} handler
+	 * */
+	removeEventListener(type, handler) {
+		
+		const filtered = this.eventListeners.filter((eventListener) => {
+			return eventListener.type === type && (eventListener.handler === handler || handler == null);
+		})
+		
+		for (let i = 0; i < filtered.length; i++) {
+			const index = this.eventListeners.indexOf(filtered[i]);
+			this.eventListeners.splice(index, 1);
+		}
+	}
+	
+	/**
+	 * @param {ICustomEvent} event
+	 * */
+	dispatchEvent(event) {
+		for (let i = 0; i < this.eventListeners.length; i++) {
+			const eventListener = this.eventListeners[i];
+			if (eventListener.type === event.type) {
+				eventListener.handler.call(this, event);
+			}
+		}
+	}
+	
+	/**
+	 * @param {string} type
+	 * @return boolean
+	 * */
+	hasEventListener(type) {
+		return !!this.eventListeners.find(el => el.type === type);
+	}
+}
+
+
+
 const TIME_TO_LEFT = 60 * 1000; // 1 минута на отгадывание слова
 
 class Player {
@@ -10,8 +80,10 @@ class Player {
 
 class CitiesGame extends EventEmitter {
 	
-	constructor() {
+	constructor(CITIES) {
 		super();
+		
+		this.CITIES = CITIES;
 		
 		this.isPlaying = false;
 		
@@ -36,8 +108,8 @@ class CitiesGame extends EventEmitter {
 		// если первый город был задан и при этом первая буква не совпадает, то сразу отказ
 		if ((this.lastLetter !== '') && (given[0].toLowerCase() !== this.lastLetter.toLowerCase())) return -1;
 		
-		for (let index = 0; index < CITIES.length; index++) {
-			let city = CITIES[index].toLowerCase();
+		for (let index = 0; index < this.CITIES.length; index++) {
+			let city = this.CITIES[index].toLowerCase();
 			
 			// находим подходящий город
 			if (given === city) {
@@ -160,3 +232,6 @@ class CitiesGame extends EventEmitter {
 	}
 	
 }
+
+globalThis.Player = Player;
+globalThis.CitiesGame = CitiesGame;
