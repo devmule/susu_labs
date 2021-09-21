@@ -77,6 +77,7 @@ class Online {
 		
 		this.screen = document.createElement('div');
 		this.screen.innerHTML = `
+<button id="request_start">запросить начало игры</button>
 <br><br><br><br><br>
 <label for="city_input">введите город. </label><div style="display: inline-block" id="time_left">123</div><br>
 <textarea name="city_input" id="city_input" cols="30" rows="1"></textarea><br>
@@ -98,6 +99,11 @@ class Online {
 		this.socket.addEventListener('error', () => alert('соединение потеряно'));
 		this.socket.addEventListener('message', this.onMessage.bind(this));
 		
+		this.request_start = this.screen.querySelector('#request_start');
+		this.request_start.addEventListener('click', () => {
+			this.socket.send(JSON.stringify({type: 'start'}));
+		});
+		
 		this.city_input = this.screen.querySelector('#city_input');
 		this.city_send = this.screen.querySelector('#city_send');
 		this.city_send.addEventListener('click', () => {
@@ -112,6 +118,16 @@ class Online {
 	}
 	
 	onMessage(e) {
-	
+		let message = JSON.parse(e.data);
+		
+		switch (message.type) {
+			case "message":
+				this.messages_log.innerHTML += `\n > ${message.message}`;
+				break
+			
+			case "time":
+				this.time_left.innerHTML = `\t ${Math.floor(message.time / 1000)} сек. осталось.`
+				break
+		}
 	}
 }
