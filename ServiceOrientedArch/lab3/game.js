@@ -1,9 +1,6 @@
-import CITIES from "./cities.js";
-import EventEmitter from "./EventEmitter.js";
-
 const TIME_TO_LEFT = 60 * 1000; // 1 минута на отгадывание слова
 
-export class Player {
+class Player {
 	/** @param {string} name */
 	constructor(name) {
 		/** @type {string} */
@@ -11,7 +8,7 @@ export class Player {
 	}
 }
 
-export class CitiesGame extends EventEmitter {
+class CitiesGame extends EventEmitter {
 	
 	constructor() {
 		super();

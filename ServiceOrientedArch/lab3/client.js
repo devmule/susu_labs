@@ -1,7 +1,4 @@
-import {CitiesGame, Player} from "./game.js";
-
-
-export class HotSeat {
+class HotSeat {
 	constructor() {
 		this.screen = document.createElement('div');
 		this.screen.innerHTML = `
@@ -75,13 +72,33 @@ export class HotSeat {
 	}
 }
 
-export class Online {
+class Online {
 	constructor(address, nickname) {
 		
 		this.screen = document.createElement('div');
+		this.screen.innerHTML = `
+<br><br><br><br><br>
+<label for="city_input">введите город. </label><div style="display: inline-block" id="time_left">123</div><br>
+<textarea name="city_input" id="city_input" cols="30" rows="1"></textarea><br>
+<button id="city_send">отправить город</button>
+<br>
+<br>
+<label for="messages_log">лог сообщений</label>
+<br>
+<textarea name="messages_log" id="messages_log" cols="30" rows="10" disabled="disabled"></textarea>
+		`;
+		
+		this.city_input = this.screen.querySelector('#city_input');
+		this.city_send = this.screen.querySelector('#city_send');
+		this.time_left = this.screen.querySelector('#time_left');
+		this.messages_log = this.screen.querySelector('#messages_log');
+		
 		
 		this.socket = new WebSocket(address);
-		this.socket.addEventListener('open', () => alert('соединение установлено'));
+		this.socket.addEventListener('open', () => {
+			this.socket.send(JSON.stringify({type: 'enter', name: nickname}));
+			alert('соединение установлено');
+		});
 		this.socket.addEventListener('close', () => alert('соединение потеряно'));
 		this.socket.addEventListener('error', () => alert('соединение потеряно'));
 		this.socket.addEventListener('message', this.onMessage.bind(this));

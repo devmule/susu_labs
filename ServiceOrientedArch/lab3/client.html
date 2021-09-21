@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>city</title>
+    <script src="EventEmitter.js"></script>
+    <script src="cities.js"></script>
+    <script src="game.js"></script>
+    <script src="client.js"></script>
 </head>
 <body>
 <div id="primary_screen">
@@ -16,8 +20,7 @@
     <textarea name="name_input" id="name_input" cols="30" rows="1"></textarea>
 </div>
 </body>
-<script type="module">
-	import {HotSeat, Online} from "./client.js";
+<script>
 
 	document.getElementById('name_input').value = `Player#${Math.floor(Math.random() * 10000)}`;
 

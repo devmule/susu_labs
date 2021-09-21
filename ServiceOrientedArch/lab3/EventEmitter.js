@@ -14,7 +14,7 @@
  * */
 
 
-export default class EventEmitter {
+class EventEmitter {
 	
 	constructor() {
 		/** @type IEventListener[] */
