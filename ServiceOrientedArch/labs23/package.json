@@ -1,0 +1,8 @@
+{
+  "name": "lab",
+  "author": "devmule",
+  "dependencies": {
+    "http-server": "^13.0.2",
+    "ws": "^8.2.2"
+  }
+}

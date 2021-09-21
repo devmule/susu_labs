@@ -1,7 +1,0 @@
-{
-  "name": "lab3",
-  "author": "devmule",
-  "dependencies": {
-    "ws": "^8.2.2"
-  }
-}

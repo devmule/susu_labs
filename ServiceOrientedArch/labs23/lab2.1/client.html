@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sorter</title>
+</head>
+<body>
+
+<label for="address">введите ws address</label><br>
+<textarea name="address" id="address" cols="30" rows="1">ws://localhost:8001</textarea><br>
+<button id="connect">подключиться</button>
+
+<br><br><br><br>
+
+<label for="input">введите слова, новое слово с новой строки</label><br>
+<textarea name="input" id="input" cols="30" rows="10"
+>булка
+яблоко
+треска
+Анатолий
+123
+виктория
+гнездо
+дятел
+оптоволокно
+гидроперикард
+Дрезден
+</textarea><br>
+<button id="send">отправить</button>
+
+<br><br><br><br><br><br><br><br><br><br>
+
+<label for="output">результат от сервера</label><br>
+<textarea name="output" id="output" cols="30" rows="10" disabled="disabled"></textarea>
+
+<script>
+	const connect = document.getElementById('connect');
+	connect.onclick = () => {
+		let url = document.getElementById('address').value.trim();
+		main(url);
+	}
+
+	function main(url) {
+
+		const socket = new WebSocket(url);
+
+		const send_btn = document.getElementById('send');
+		const input_area = document.getElementById('input');
+		const output_area = document.getElementById('output');
+
+		send_btn.onclick = () => socket.send(input_area.value);
+
+		socket.addEventListener('open', () => alert('соединение установлено'));
+		socket.addEventListener('close', () => alert('соединение потеряно'));
+		socket.addEventListener('error', () => alert('соединение потеряно'));
+		socket.addEventListener('message', e => output_area.value = e.data);
+
+	}
+</script>
+</body>
+</html>
