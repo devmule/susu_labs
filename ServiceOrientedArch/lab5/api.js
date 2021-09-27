@@ -52,7 +52,6 @@ let collectionCRUD = (Collection) => {
 
 const api = express.Router();
 
-api.use('/Admin', collectionCRUD(require('./models/Admin.js')));
 api.use('/Item', collectionCRUD(require('./models/Item.js')));
 api.use('/ItemType', collectionCRUD(require('./models/ItemType.js')));
 api.use('/Location', collectionCRUD(require('./models/Location.js')));
