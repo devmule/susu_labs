@@ -17,6 +17,4 @@ const PlayerSchema = new mongoose.Schema({
 	position: {type: mongoose.Types.ObjectId, ref: 'Location'},
 });
 
-module.exports = {
-	Player: mongoose.model('Player', PlayerSchema),
-};
+module.exports = mongoose.model('Player', PlayerSchema);

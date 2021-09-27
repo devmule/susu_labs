@@ -14,6 +14,4 @@ const LocationSchema = new mongoose.Schema({
 	locationType: {type: String, enum: locationTypeEnum, default: locationTypeEnum[0]},
 });
 
-module.exports = {
-	Location: mongoose.model('Location', LocationSchema),
-};
+module.exports = mongoose.model('Location', LocationSchema);
