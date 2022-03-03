@@ -58,8 +58,7 @@ namespace TCPServer
                     StreamReader sr = new StreamReader(s);
                     StreamWriter sw = new StreamWriter(s);
                     sw.AutoFlush = true; // enable automatic flushing
-                    sw.WriteLine("{0} Employees available",
-                    employees.Count);
+                    sw.WriteLine("{0} Employees available", employees.Count);
 
                     while (true)
                     {

@@ -13,3 +13,4 @@ C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClie
 C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\ref\TCPClient.dll
 C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.pdb
 C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.genruntimeconfig.cache
+C:\Users\Maksim\Desktop\susu_labs\ServiceOrientedArch\lab1\socket-basics\TCPClient\obj\Debug\net5.0\TCPClient.csproj.AssemblyReference.cache
