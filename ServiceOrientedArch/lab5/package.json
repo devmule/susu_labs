@@ -13,7 +13,7 @@
     "admin-bro": "^4.0.1",
     "admin-bro-users-permissions": "^1.0.4",
     "cookie-parser": "^1.4.6",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-formidable": "^1.2.0",
     "express-session": "^1.17.2",
     "mongoose": "^6.0.7",
